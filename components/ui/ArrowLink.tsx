@@ -7,10 +7,11 @@ type Props = {
   className?: string;
   arrowClassName?: string;
   external?: boolean;
+  onClick?: () => void;
 };
 
 /** "→ Label" link, the reference's primary text-link pattern. The arrow nudges right on hover. */
-export function ArrowLink({ href, children, className, arrowClassName, external }: Props) {
+export function ArrowLink({ href, children, className, arrowClassName, external, onClick }: Props) {
   const inner = (
     <>
       <span
@@ -30,13 +31,13 @@ export function ArrowLink({ href, children, className, arrowClassName, external 
   const cls = cn("group inline-flex items-baseline gap-[0.45em] text-link", className);
   if (external) {
     return (
-      <a href={href} className={cls} target="_blank" rel="noopener noreferrer">
+      <a href={href} className={cls} target="_blank" rel="noopener noreferrer" onClick={onClick}>
         {inner}
       </a>
     );
   }
   return (
-    <Link href={href} className={cls}>
+    <Link href={href} className={cls} onClick={onClick}>
       {inner}
     </Link>
   );
