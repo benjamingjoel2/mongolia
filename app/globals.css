@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/*
+ * Steppe & Sky design tokens.
+ * Type scale and spacing follow the reference blueprint (measured at 390px and 1440px)
+ * and interpolate fluidly between them. Palette names mirror config/site.ts.
+ */
+
+@theme {
+  --color-sky: #2f6fb5;
+  --color-sky-deep: #24578f;
+  --color-steppe: #5e7a45;
+  --color-steppe-deep: #4a6236;
+  --color-steppe-tint: #dfe5d5;
+  --color-gobi: #d9a441;
+  --color-gobi-tint: #f1e2c2;
+  --color-felt: #b3261e;
+  --color-felt-deep: #8f1d17;
+  --color-charcoal: #1c1d1f;
+  --color-charcoal-soft: #2a2b2e;
+  --color-offwhite: #f7f4ee;
+  --color-sand: #efe7da;
+  --color-stone: #8a857c;
+
+  --font-sans: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --ease-ref: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --breakpoint-xs: 30rem;
+}
+
+:root {
+  /* Page gutter: 15px on phones, ~57px (4vw) on desktop. */
+  --gutter: 15px;
+  --header-h: 56px;
+  --bar-h: 52px;
+  --dur: 0.8s;
+  --dur-fast: 0.4s;
+  color-scheme: light;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: max(28px, 3.96vw);
+    --header-h: 80px;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--color-offwhite);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-gobi);
+  color: var(--color-charcoal);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--color-gobi);
+}
+
+/* ---------- Type scale (reference: 390px → 1440px) ---------- */
+
+@utility text-display {
+  /* Hero wordmark: 86px (22vw) on phones → 185px (12.85vw) at 1440 */
+  font-size: min(22vw, 9rem);
+  line-height: 0.85;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .text-display {
+    font-size: min(12.85vw, 15rem);
+  }
+}
+
+@utility text-h1 {
+  /* Section headline: 36px → 100px */
+  font-size: clamp(2.25rem, 6.95vw, 7.5rem);
+  line-height: 0.99;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+@utility text-story {
+  /* Overlay story copy: 35px → 100px */
+  font-size: clamp(2.1875rem, 6.95vw, 7.5rem);
+  line-height: 0.99;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+@utility text-h2 {
+  /* Card title: 28px → 50px */
+  font-size: clamp(1.75rem, 3.47vw, 3.75rem);
+  line-height: 0.99;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+@utility text-h3 {
+  /* Mosaic tile title: 20px → 50px */
+  font-size: clamp(1.25rem, 3.47vw, 3.75rem);
+  line-height: 0.99;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+@utility text-lead {
+  /* Hero lead: 21px → 30px */
+  font-size: clamp(1.3125rem, 2.08vw, 2.25rem);
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+@utility text-body-lg {
+  /* Expanded card copy: 21px → 25px */
+  font-size: clamp(1.125rem, 1.74vw, 1.75rem);
+  line-height: 1.18;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+@utility text-link {
+  /* Arrow links: 16px → 23px */
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+@utility text-nav {
+  /* Nav: 13px → 15px uppercase */
+  font-size: clamp(0.8125rem, 1.05vw, 0.9375rem);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+@utility text-micro {
+  /* Stats, eyebrows, index numbers: 12px → 16px */
+  font-size: clamp(0.75rem, 1.11vw, 1rem);
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+@utility gutter {
+  padding-inline: var(--gutter);
+}
+
+/* Organic blob radii used by buttons and indicators, shapes echo the reference's irregular red buttons. */
+@utility rounded-blob {
+  border-radius: 46% 54% 44% 56% / 58% 50% 50% 42%;
+}
+
+@utility rounded-blob-pill {
+  border-radius: 999px 860px 920px 780px / 780px 920px 860px 999px;
+}
+
+/* Thin ornament line inspired by traditional Mongolian border patterns, used sparingly. */
+@utility ornament-line {
+  height: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10' viewBox='0 0 20 10'%3E%3Cpath d='M0 9h4V3h6v4H7V5' fill='none' stroke='%23D9A441' stroke-width='1.2'/%3E%3Cpath d='M20 1h-4v6h-6V3h3v2' fill='none' stroke='%23D9A441' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 20px 10px;
+}
+
+/* Hide scrollbars on horizontal tracks while keeping them scrollable. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
