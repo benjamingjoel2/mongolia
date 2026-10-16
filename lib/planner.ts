@@ -52,14 +52,14 @@ export const dialCodes = [
   { code: "+976", label: "Mongolia +976" },
 ] as const;
 
-const enumOf = <T extends readonly { value: string }[]>(list: T) =>
-  z.enum(list.map((x) => x.value) as [T[number]["value"], ...T[number]["value"][]]);
+const enumOf = <T extends readonly { value: string }[]>(list: T, message: string) =>
+  z.enum(list.map((x) => x.value) as [T[number]["value"], ...T[number]["value"][]], { message });
 
 export const stepWhen = z.object({
   month: z.coerce.number({ message: "Choose a month" }).int().min(1, "Choose a month").max(12),
   flexible: z.enum(["yes", "no"], { message: "Let us know if your dates are flexible" }),
   days: z.coerce.number().int().min(5, "At least 5 days").max(30, "Up to 30 days"),
-  festival: enumOf(festivalChoices),
+  festival: enumOf(festivalChoices, "Choose a festival, or no festival"),
 });
 
 export const stepWhere = z
@@ -76,8 +76,8 @@ export const stepWhere = z
 export const stepStyle = z.object({
   style: z.enum(["group", "private"], { message: "Choose group or private" }),
   comfort: z.enum(["traditional", "comfortable", "luxury"], { message: "Choose a comfort level" }),
-  riding: enumOf(ridingChoices),
-  fitness: enumOf(fitnessChoices),
+  riding: enumOf(ridingChoices, "Choose your riding experience"),
+  fitness: enumOf(fitnessChoices, "Choose a fitness level"),
 });
 
 export const stepWho = z
@@ -87,7 +87,7 @@ export const stepWho = z
     childAges: z.array(z.coerce.number().int().min(0, "Age 0 to 17").max(17, "Age 0 to 17")).default([]),
     dietary: z.array(z.string()).default([]),
     dietaryNotes: z.string().max(500).optional().default(""),
-    budget: enumOf(budgetChoices),
+    budget: enumOf(budgetChoices, "Choose a budget, or “Not sure yet”"),
   })
   .refine((v) => v.childAges.length === v.children, {
     message: "Add an age for each child",

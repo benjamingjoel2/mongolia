@@ -59,6 +59,7 @@ function Card({ card }: { card: ExpandCard }) {
       <Photo
         image={card.image}
         sizes="(min-width: 768px) 32vw, 90vw"
+        alt=""
         className={cn("transition-transform duration-[1.2s] ease-ref", open ? "scale-110" : "group-hover:scale-[1.05]")}
       />
       <div

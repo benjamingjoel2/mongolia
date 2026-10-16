@@ -123,6 +123,7 @@ function Card({ card }: { card: CarouselCard }) {
           <Photo
             image={card.image}
             sizes="(min-width: 768px) 34vw, 60vw"
+            alt=""
             className="transition-transform duration-[1.2s] ease-ref group-hover:scale-[1.06]"
           />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-charcoal/65 via-charcoal/10 to-charcoal/55" />

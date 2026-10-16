@@ -145,6 +145,7 @@ function Tile({
       <Photo
         image={item.image}
         sizes="(min-width: 768px) 46vw, 48vw"
+        alt=""
         className="transition-transform duration-[1.2s] ease-ref group-hover:scale-[1.06]"
       />
       <div
