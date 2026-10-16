@@ -71,6 +71,11 @@ function fromQuery(values: PlannerValues): { values: PlannerValues; source?: str
     next.when.month = festival === "naadam" ? 7 : festival === "golden-eagle-festival" ? 10 : 2;
   }
   if (region && !next.where.regions.includes(region)) next.where.regions.push(region);
+  const departure = p.get("departure");
+  if (adventure && !next.contact.notes) {
+    const name = adventure.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+    next.contact.notes = `I'm interested in: ${name}${departure ? ` (departure starting ${departure})` : ""}.`;
+  }
   return { values: next, source: adventure ? `adventure:${adventure}` : festival ? `festival:${festival}` : undefined };
 }
 
@@ -222,7 +227,7 @@ function PlannerInner({
   return (
     <div ref={top} className="flex flex-col">
       {/* Progress: step labels with the moving blob, plus a progress line */}
-      <nav aria-label="Planner steps" className="sticky top-0 z-10 -mx-[var(--gutter)] bg-charcoal/95 px-[var(--gutter)] backdrop-blur-md">
+      <nav aria-label="Planner steps" className={cn("sticky z-10", inModal ? "top-0" : "top-14", " -mx-[var(--gutter)] bg-charcoal/95 px-[var(--gutter)] backdrop-blur-md")}>
         <LayoutGroup id="planner-steps">
           <ol className="hidden items-stretch gap-1 md:flex">
             {stepLabels.map((label, i) => {

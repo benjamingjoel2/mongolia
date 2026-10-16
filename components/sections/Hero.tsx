@@ -143,7 +143,10 @@ export function Hero({
 
       {scrollTo && (
         <motion.div
-          className="absolute inset-x-0 bottom-[calc(var(--bar-h)+24px)] z-10 flex justify-center xl:bottom-[5svh]"
+          className={cn(
+            "absolute inset-x-0 bottom-[calc(var(--bar-h)+24px)] z-10 justify-center xl:bottom-[5svh]",
+            size === "page" ? "hidden md:flex" : "flex",
+          )}
           initial={{ opacity: 0, scale: 0.6 }}
           animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
           transition={{ duration: 0.8, delay: 0.6, ease }}

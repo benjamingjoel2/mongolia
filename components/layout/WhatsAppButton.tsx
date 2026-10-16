@@ -1,8 +1,13 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { whatsappHref } from "@/config/site";
 import { ChatIcon } from "@/components/ui/icons";
 
 /** Floating WhatsApp button (wa.me link from /config). Sits above the mobile bottom bar. */
 export function WhatsAppButton() {
+  // The planner has its own sticky actions in this corner.
+  if (usePathname().startsWith("/plan-my-adventure")) return null;
   return (
     <a
       data-chrome
