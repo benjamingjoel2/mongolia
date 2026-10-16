@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight } from "next/font/google";
+import { preconnect } from "react-dom";
 import { site } from "@/config/site";
 import { Header } from "@/components/layout/Header";
 import { MobileBar } from "@/components/layout/MobileBar";
@@ -9,7 +10,7 @@ import { MotionProvider } from "@/components/layout/MotionProvider";
 import "./globals.css";
 
 const interTight = Inter_Tight({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   style: ["normal", "italic"],
   variable: "--font-inter-tight",
@@ -46,6 +47,7 @@ export default function RootLayout({
   children,
   modal,
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
+  preconnect("https://images.unsplash.com", { crossOrigin: "anonymous" });
   return (
     <html lang="en" className={interTight.variable}>
       <body className="min-h-dvh">

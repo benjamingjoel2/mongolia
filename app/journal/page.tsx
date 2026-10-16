@@ -19,6 +19,7 @@ export default function JournalPage() {
     <>
       <Hero size="page" image={images.milkyWaySteppe} horizon={78} eyebrow="Journal" title="Notes from *the steppe*" lead="Guides, stories and straight talk for planning your trip to Mongolia." />
       <section data-theme="light" className="gutter py-20 md:py-[8vw]">
+        <h2 className="sr-only">Latest posts</h2>
         <StoryMosaic
           syncUrl={false}
           items={posts.map((p) => ({

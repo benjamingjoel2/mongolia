@@ -42,7 +42,7 @@ export default function RegionsPage() {
                   <ArrowLink href={`/regions/${r.slug}`} arrowClassName="text-felt">
                     {r.name}
                   </ArrowLink>
-                  <span className="text-[14px] text-charcoal/60">{adventuresInRegion(r.slug).length} adventures</span>
+                  <span className="text-[14px] text-charcoal/70">{adventuresInRegion(r.slug).length} adventures</span>
                 </li>
               ))}
             </ul>
@@ -51,6 +51,7 @@ export default function RegionsPage() {
         </div>
       </section>
       <section data-theme="light" className="gutter pb-24 md:pb-[10vw]">
+        <h2 className="sr-only">All regions</h2>
         <StoryMosaic items={regions.map(regionTile)} syncUrl={false} />
       </section>
       <CtaBand title="*Two* regions, one trip?" text="Tell us what draws you and we'll design a route that links them without endless driving." />

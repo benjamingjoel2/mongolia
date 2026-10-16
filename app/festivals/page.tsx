@@ -54,7 +54,7 @@ export default function FestivalsPage() {
               <ArrowLink href={`#${f.slug}`} arrowClassName="text-felt">
                 {f.name}
               </ArrowLink>
-              <span className="text-[14px] text-charcoal/60">{f.months.map((m) => monthNames[m]).join(" / ")}</span>
+              <span className="text-[14px] text-charcoal/70">{f.months.map((m) => monthNames[m]).join(" / ")}</span>
             </li>
           ))}
         </ul>

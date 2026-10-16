@@ -9,6 +9,7 @@ export function WhatsAppButton() {
   // The planner has its own sticky actions in this corner.
   if (usePathname().startsWith("/plan-my-adventure")) return null;
   return (
+    <aside aria-label="Quick contact">
     <a
       data-chrome
       href={whatsappHref}
@@ -22,5 +23,6 @@ export function WhatsAppButton() {
         WhatsApp us
       </span>
     </a>
+    </aside>
   );
 }

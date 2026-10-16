@@ -28,7 +28,8 @@ export function Photo({
       fill
       sizes={sizes}
       quality={quality}
-      priority={priority}
+      preload={priority}
+      fetchPriority={priority ? "high" : undefined}
       className={cn("object-cover", className)}
     />
   );

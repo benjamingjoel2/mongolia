@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { regions, getRegion, adventuresInRegion, experiencesInRegion } from "@/lib/content";
 import { monthNames } from "@/data/taxonomy";
 import type { MonthNumber } from "@/data/types";
-import { sized } from "@/lib/images";
 import { adventureCard, experienceCard } from "@/lib/cards";
 import { Hero } from "@/components/sections/Hero";
 import { StoryBlock } from "@/components/sections/StoryBlock";
@@ -23,12 +23,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const r = getRegion((await params).slug);
   if (!r) return {};
-  return {
-    title: r.seo.title,
-    description: r.seo.description,
-    alternates: { canonical: `/regions/${r.slug}` },
-    openGraph: { images: [{ url: sized(r.hero, 1200), width: 1200, height: 630, alt: r.hero.alt }] },
-  };
+  return pageMeta({ title: r.seo.title, description: r.seo.description, path: `/regions/${r.slug}`, image: r.hero });
 }
 
 export default async function RegionPage({ params }: Params) {
@@ -76,7 +71,7 @@ export default async function RegionPage({ params }: Params) {
                 return (
                   <li
                     key={m}
-                    className={`grid h-12 place-items-center rounded-[10px] text-[14px] font-medium ${best ? "bg-steppe text-offwhite" : "bg-offwhite/70 text-charcoal/45"}`}
+                    className={`grid h-12 place-items-center rounded-[10px] text-[14px] font-medium ${best ? "bg-steppe-deep text-offwhite" : "bg-offwhite/70 text-charcoal/70"}`}
                   >
                     <span aria-hidden>{monthNames[m].slice(0, 3)}</span>
                     <span className="sr-only">{`${monthNames[m]}${best ? ", recommended" : ""}`}</span>

@@ -92,7 +92,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
       {/* Filter bar */}
       <div className="sticky top-14 z-30 -mx-[var(--gutter)] border-y border-charcoal/10 bg-offwhite/95 backdrop-blur-md">
         <div className="gutter flex items-center gap-1 overflow-x-auto no-scrollbar">
-          <span className="text-nav mr-2 hidden shrink-0 text-charcoal/60 md:inline">Filter</span>
+          <span className="text-nav mr-2 hidden shrink-0 text-charcoal/70 md:inline">Filter</span>
           {groups.map((g) => {
             const n = filters[g.key].length;
             const isOpen = openKey === g.key;
@@ -183,9 +183,9 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
 
       {/* Result summary */}
       <div className="flex flex-wrap items-baseline justify-between gap-4 py-8 md:py-12">
-        <p className="text-h2" aria-live="polite">
+        <h2 className="text-h2" aria-live="polite">
           {results.length} {results.length === 1 ? "adventure" : "adventures"}
-        </p>
+        </h2>
         {active > 0 && (
           <div className="flex flex-wrap items-center gap-2">
             {groups.flatMap((g) =>

@@ -72,7 +72,7 @@ export default function AboutPage() {
                 <h3 className="mt-4 text-[22px] font-medium leading-tight tracking-[-0.03em] md:text-[28px]">{p.name}</h3>
                 <p className="text-micro mt-1 uppercase tracking-[0.04em] text-felt">{p.title}</p>
                 <p className="mt-3 hidden text-[16px] leading-snug text-charcoal/75 md:block">{p.bio}</p>
-                <p className="mt-3 text-[14px] text-charcoal/60">
+                <p className="mt-3 text-[14px] text-charcoal/70">
                   {p.languages.join(", ")} · {pick(getRegion, p.regions).map((r) => r.shortName).join(", ")}
                 </p>
               </Reveal>

@@ -8,9 +8,6 @@ import { Photo } from "@/components/ui/Photo";
 import { Emphasis } from "@/components/ui/DisplayHeading";
 import { BlobIconButton } from "@/components/ui/BlobButton";
 import { ArrowDown } from "@/components/ui/icons";
-import { useIntroDone } from "./IntroReel";
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 type Props = {
   image: Img;
@@ -49,8 +46,6 @@ export function Hero({
 }: Props) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const introDone = useIntroDone();
-  const ready = !waitForIntro || introDone;
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const planeY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "18%"]);
@@ -62,15 +57,15 @@ export function Hero({
 
   const plane = (
     <>
-      <Photo image={image} sizes="100vw" priority={priority} quality={75} className="scale-110" alt="" />
+      <Photo image={image} sizes="100vw" priority={priority} quality={60} className="scale-110" alt="" />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/25 to-charcoal/70" />
     </>
   );
 
+  // CSS entrance (paints before hydration, so it never delays LCP); held while the intro reel plays.
   const enter = (i: number) => ({
-    initial: { opacity: 0, y: 60 },
-    animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 },
-    transition: { duration: 1, delay: 0.1 + i * 0.12, ease },
+    className: cn("hero-rise", waitForIntro && "hero-wait"),
+    style: { "--d": `${0.1 + i * 0.12}s` } as React.CSSProperties,
   });
 
   return (
@@ -96,23 +91,25 @@ export function Hero({
         style={{ y: typeY, opacity: typeOpacity }}
       >
         {eyebrow && (
-          <motion.div {...enter(0)} className="text-micro mb-5 uppercase tracking-[0.02em] text-offwhite/85 md:mb-8">
-            {eyebrow}
-          </motion.div>
+          <div {...enter(0)}>
+            <div className="text-micro mb-5 uppercase tracking-[0.02em] text-offwhite/85 md:mb-8">{eyebrow}</div>
+          </div>
         )}
         {lines ? (
           <h1 className="text-display">
-            <motion.span {...enter(0)} className="block pl-[8vw] md:pl-[8.7vw]">
-              {lines[0]}
-            </motion.span>
-            <motion.span {...enter(1)} className="block">
-              {lines[1]}
-            </motion.span>
+            <span {...enter(0)}>
+              <span className="block pl-[8vw] md:pl-[8.7vw]">{lines[0]}</span>
+            </span>
+            <span {...enter(1)}>
+              <span className="block">{lines[1]}</span>
+            </span>
           </h1>
         ) : (
-          <motion.h1 {...enter(1)} className="text-h1 max-w-[16ch] text-balance md:max-w-[14ch]">
-            <Emphasis text={title ?? ""} />
-          </motion.h1>
+          <div {...enter(1)}>
+            <h1 className="text-h1 max-w-[16ch] text-balance md:max-w-[14ch]">
+              <Emphasis text={title ?? ""} />
+            </h1>
+          </div>
         )}
       </motion.div>
 
@@ -134,30 +131,29 @@ export function Hero({
           )}
           style={{ y: leadY }}
         >
-          <motion.div {...enter(2)}>
+          <div {...enter(2)}>
             {lead && <div className="text-lead text-pretty">{lead}</div>}
             {children && <div className="mt-7 md:mt-11">{children}</div>}
-          </motion.div>
+          </div>
         </motion.div>
       )}
 
       {scrollTo && (
-        <motion.div
+        <div
           className={cn(
             "absolute inset-x-0 bottom-[calc(var(--bar-h)+24px)] z-10 justify-center xl:bottom-[5svh]",
             size === "page" ? "hidden md:flex" : "flex",
           )}
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
-          transition={{ duration: 0.8, delay: 0.6, ease }}
         >
+          <div {...enter(4)}>
           <BlobIconButton
             label="Scroll to the next section"
             onClick={() => document.getElementById(scrollTo)?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" })}
           >
             <ArrowDown className="size-6 animate-[nudge_2.4s_ease-in-out_infinite]" />
           </BlobIconButton>
-        </motion.div>
+          </div>
+        </div>
       )}
 
       {image.credit && (

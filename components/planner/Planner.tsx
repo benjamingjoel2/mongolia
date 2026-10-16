@@ -84,7 +84,14 @@ const noop = () => () => {};
 /** Renders the planner only after hydration so saved progress can seed the initial state. */
 export function Planner(props: { regions: RegionOption[]; monthHints: MonthHint[]; inModal?: boolean; onClose?: () => void }) {
   const hydrated = useSyncExternalStore(noop, () => true, () => false);
-  if (!hydrated) return <div className="min-h-[70vh]" aria-busy="true" />;
+  if (!hydrated)
+    return (
+      <div className="min-h-[70vh] pt-[calc(3.5rem+2px+2.5rem)] md:pt-[calc(3.5rem+2px+4rem)]" aria-busy="true">
+        <h2 className="text-h1 mb-10 max-w-[16ch] md:mb-16">
+          <Emphasis text={titles[0]} />
+        </h2>
+      </div>
+    );
   return <PlannerInner {...props} />;
 }
 
@@ -284,7 +291,7 @@ function PlannerInner({
             </button>
           </p>
         )}
-        <AnimatePresence mode="wait" custom={direction}>
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.section
             key={step}
             aria-labelledby="planner-step-title"

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { experiences, getExperience, getAdventure, getRegion, pick } from "@/lib/content";
 import { monthNames } from "@/data/taxonomy";
-import { sized } from "@/lib/images";
 import { adventureCard, experienceCard } from "@/lib/cards";
 import { Hero } from "@/components/sections/Hero";
 import { StoryBlock } from "@/components/sections/StoryBlock";
@@ -22,12 +22,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const e = getExperience((await params).slug);
   if (!e) return {};
-  return {
-    title: e.seo.title,
-    description: e.seo.description,
-    alternates: { canonical: `/experiences/${e.slug}` },
-    openGraph: { images: [{ url: sized(e.hero, 1200), width: 1200, height: 630, alt: e.hero.alt }] },
-  };
+  return pageMeta({ title: e.seo.title, description: e.seo.description, path: `/experiences/${e.slug}`, image: e.hero });
 }
 
 export default async function ExperiencePage({ params }: Params) {
@@ -46,7 +41,7 @@ export default async function ExperiencePage({ params }: Params) {
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-20">
           <aside className="flex flex-col gap-10 lg:sticky lg:top-24 lg:self-start">
             <div>
-              <h2 className="text-micro mb-4 uppercase tracking-[0.04em] text-charcoal/55">Where</h2>
+              <h2 className="text-micro mb-4 uppercase tracking-[0.04em] text-charcoal/70">Where</h2>
               <ul className="flex flex-wrap gap-2">
                 {regionList.map((r) => (
                   <li key={r.slug}>
@@ -58,7 +53,7 @@ export default async function ExperiencePage({ params }: Params) {
               </ul>
             </div>
             <div>
-              <h2 className="text-micro mb-4 uppercase tracking-[0.04em] text-charcoal/55">When</h2>
+              <h2 className="text-micro mb-4 uppercase tracking-[0.04em] text-charcoal/70">When</h2>
               <p className="text-[18px] leading-snug">{e.months.map((m) => monthNames[m]).join(", ")}</p>
             </div>
             {e.etiquette && e.etiquette.length > 0 && (

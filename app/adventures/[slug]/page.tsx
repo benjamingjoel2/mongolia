@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { adventures, getAdventure, getFestival, getRegion, getStay, pick, testimonialsFor, getExperience } from "@/lib/content";
@@ -6,7 +7,6 @@ import { difficultyLabels, monthNames, seasonLabels, styleLabels } from "@/data/
 import type { Adventure, Meal } from "@/data/types";
 import { site } from "@/config/site";
 import { adventureCard } from "@/lib/cards";
-import { sized } from "@/lib/images";
 import { Hero } from "@/components/sections/Hero";
 import { StoryBlock } from "@/components/sections/StoryBlock";
 import { Accordion } from "@/components/sections/Accordion";
@@ -35,12 +35,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const a = getAdventure(slug);
   if (!a) return {};
-  return {
-    title: a.seo.title,
-    description: a.seo.description,
-    alternates: { canonical: `/adventures/${a.slug}` },
-    openGraph: { title: a.seo.title, description: a.seo.description, images: [{ url: sized(a.hero, 1200), width: 1200, height: 630, alt: a.hero.alt }] },
-  };
+  return pageMeta({ title: a.seo.title, description: a.seo.description, path: `/adventures/${a.slug}`, image: a.hero });
 }
 
 const mealNames: Record<Meal, string> = { B: "Breakfast", L: "Lunch", D: "Dinner" };
@@ -143,14 +138,16 @@ export default async function AdventurePage({ params }: Params) {
         <dl className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto]">
           {facts.map((f) => (
             <div key={f.label}>
-              <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/55">{f.label}</dt>
+              <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/70">{f.label}</dt>
               <dd className="text-[18px] font-medium leading-snug tracking-[-0.02em] md:text-[20px]">{f.value}</dd>
             </div>
           ))}
           <div className="flex flex-col items-start gap-3 lg:items-end">
-            <span className="text-micro uppercase tracking-[0.04em] text-charcoal/55">From, per person</span>
-            <Price usd={a.priceFromUSD} className="text-[32px] font-medium leading-none tracking-[-0.04em] md:text-[40px]" />
-            <BlobButton href={planHref}>Plan this adventure</BlobButton>
+            <dt className="text-micro uppercase tracking-[0.04em] text-charcoal/70">From, per person</dt>
+            <dd className="flex flex-col items-start gap-3 lg:items-end">
+              <Price usd={a.priceFromUSD} className="text-[32px] font-medium leading-none tracking-[-0.04em] md:text-[40px]" />
+              <BlobButton href={planHref}>Plan this adventure</BlobButton>
+            </dd>
           </div>
         </dl>
         {festival && (
@@ -195,7 +192,7 @@ export default async function AdventurePage({ params }: Params) {
                   <p className="text-body-lg">{d.description}</p>
                   <dl className="grid gap-6 text-[15px] md:grid-cols-3 md:text-[16px]">
                     <div>
-                      <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/55">Activities</dt>
+                      <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/70">Activities</dt>
                       <dd>
                         <ul className="flex flex-wrap gap-2">
                           {d.activities.map((x) => (
@@ -207,14 +204,14 @@ export default async function AdventurePage({ params }: Params) {
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/55">Tonight</dt>
+                      <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/70">Tonight</dt>
                       <dd>
                         {d.stay}
-                        {stay && <span className="block text-charcoal/60">{comfortLabels[stay.comfort].label}</span>}
+                        {stay && <span className="block text-charcoal/70">{comfortLabels[stay.comfort].label}</span>}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/55">Meals</dt>
+                      <dt className="text-micro mb-2 uppercase tracking-[0.04em] text-charcoal/70">Meals</dt>
                       <dd>{d.meals.length ? d.meals.map((m) => mealNames[m]).join(", ") : "Own arrangements"}</dd>
                     </div>
                   </dl>
@@ -338,7 +335,7 @@ export default async function AdventurePage({ params }: Params) {
 
       {/* Experiences on this trip */}
       <section data-theme="light" className="gutter py-16 md:py-[6vw]">
-        <p className="text-micro mb-6 uppercase tracking-[0.04em] text-charcoal/55">Experiences on this adventure</p>
+        <p className="text-micro mb-6 uppercase tracking-[0.04em] text-charcoal/70">Experiences on this adventure</p>
         <ul className="flex flex-wrap gap-2">
           {pick(getExperience, a.experiences).map((e) => (
             <li key={e.slug}>
@@ -371,7 +368,7 @@ function DeparturesTable({ adventure: a, planHref }: { adventure: Adventure; pla
       <table className="w-full min-w-[640px] border-collapse text-left">
         <caption className="sr-only">Departure dates and prices for {a.title}</caption>
         <thead>
-          <tr className="text-micro uppercase tracking-[0.04em] text-charcoal/55">
+          <tr className="text-micro uppercase tracking-[0.04em] text-charcoal/70">
             <th scope="col" className="pb-4 font-medium">Dates</th>
             <th scope="col" className="pb-4 font-medium">Style</th>
             <th scope="col" className="pb-4 font-medium">Availability</th>
@@ -386,13 +383,13 @@ function DeparturesTable({ adventure: a, planHref }: { adventure: Adventure; pla
                 <span className="text-[19px] font-medium tracking-[-0.02em] md:text-[22px]">
                   {fmtDate(d.start, false)} – {fmtDate(d.end)}
                 </span>
-                {d.note && <span className="mt-1 block max-w-[40ch] text-[14px] text-charcoal/60">{d.note}</span>}
+                {d.note && <span className="mt-1 block max-w-[40ch] text-[14px] text-charcoal/70">{d.note}</span>}
               </td>
               <td className="py-5 pr-6 text-[16px]">{styleLabels[d.style]}</td>
               <td className="py-5 pr-6">
                 <span
                   className={`inline-flex rounded-full px-3 py-1 text-[13px] font-medium ${
-                    d.status === "open" ? "bg-steppe-tint text-steppe-deep" : d.status === "limited" ? "bg-gobi-tint text-charcoal" : "bg-charcoal/10 text-charcoal/60"
+                    d.status === "open" ? "bg-steppe-tint text-steppe-deep" : d.status === "limited" ? "bg-gobi-tint text-charcoal" : "bg-charcoal/10 text-charcoal/70"
                   }`}
                 >
                   {status[d.status]}

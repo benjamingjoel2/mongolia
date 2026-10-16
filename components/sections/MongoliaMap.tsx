@@ -39,7 +39,7 @@ export function MongoliaMap({
 
   return (
     <figure className={cn("relative", className)}>
-      <svg viewBox="-6 -8 221 116" role="img" aria-label={label} className={cn("h-auto w-full overflow-visible", ink)}>
+      <svg viewBox="-6 -8 221 116" role={markers.some((m) => m.href) ? "group" : "img"} aria-label={label} className={cn("h-auto w-full overflow-visible", ink)}>
         <defs>
           <pattern id="map-grain" width="3" height="3" patternUnits="userSpaceOnUse">
             <circle cx="1.5" cy="1.5" r="0.35" className="fill-current opacity-25" />
@@ -109,7 +109,7 @@ export function MongoliaMap({
           );
         })}
       </svg>
-      <figcaption className={cn("mt-3 text-[12px] tracking-[-0.01em] md:text-[13px]", tone === "dark" ? "text-offwhite/60" : "text-charcoal/60")}>
+      <figcaption className={cn("mt-3 text-[12px] tracking-[-0.01em] md:text-[13px]", tone === "dark" ? "text-offwhite/60" : "text-charcoal/70")}>
         Stylised map, not to scale. Map placeholder.
       </figcaption>
       {route && route.length > 0 && (

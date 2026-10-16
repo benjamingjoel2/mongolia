@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getPost, getPosts } from "@/data/posts";
 import { getAdventure, pick } from "@/lib/content";
@@ -20,12 +21,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const p = getPost((await params).slug);
   if (!p) return {};
-  return {
-    title: p.title,
-    description: p.excerpt,
-    alternates: { canonical: `/journal/${p.slug}` },
-    openGraph: { type: "article", publishedTime: p.date, images: [{ url: sized(p.hero, 1200), width: 1200, height: 630, alt: p.hero.alt }] },
-  };
+  return pageMeta({ title: p.title, description: p.excerpt, path: `/journal/${p.slug}`, image: p.hero, type: "article" });
 }
 
 const fmt = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });

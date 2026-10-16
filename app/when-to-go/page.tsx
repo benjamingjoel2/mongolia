@@ -72,7 +72,7 @@ export default function WhenToGoPage() {
             </li>
           ))}
         </ol>
-        <p className="mt-6 text-[13px] text-charcoal/60">Night low / day high, °C. Indicative only.</p>
+        <p className="mt-6 text-[13px] text-charcoal/70">Night low / day high, °C. Indicative only.</p>
       </section>
 
       {/* Month by month */}
@@ -100,12 +100,12 @@ export default function WhenToGoPage() {
               <p className="text-body-lg text-pretty">{m.conditions}</p>
               <div className="flex flex-col gap-3 text-[15px]">
                 <p>
-                  <span className="text-charcoal/60">Days</span> {m.dayTempC[0]}° to {m.dayTempC[1]}°C ·{" "}
-                  <span className="text-charcoal/60">Nights</span> {m.nightTempC}°C
+                  <span className="text-charcoal/70">Days</span> {m.dayTempC[0]}° to {m.dayTempC[1]}°C ·{" "}
+                  <span className="text-charcoal/70">Nights</span> {m.nightTempC}°C
                 </p>
                 {m.bestRegions.length > 0 && (
                   <p>
-                    <span className="text-charcoal/60">Best for</span> {m.bestRegions.map((r) => regionName.get(r)).join(", ")}
+                    <span className="text-charcoal/70">Best for</span> {m.bestRegions.map((r) => regionName.get(r)).join(", ")}
                   </p>
                 )}
                 {m.festivals.length > 0 && (

@@ -27,6 +27,7 @@ export default function WhatToPackPage() {
       />
       <StoryBlock text="Luggage travels in the back of a 4x4 or on a camel, so *pack light and soft*: one duffel of up to 15 kg and a daypack is ideal." />
       <section data-theme="light" className="gutter bg-sand py-20 md:py-[8vw]">
+        <h2 className="sr-only">Packing lists</h2>
         <PackingGuide categories={packing} />
         <p className="mt-12 max-w-[60ch] text-[15px] text-charcoal/70">
           Generic guidance only. Your specialist sends a tailored list for your route and season, including anything we

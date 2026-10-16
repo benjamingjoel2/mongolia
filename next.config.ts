@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
+    // Unsplash's CDN resizes and serves AVIF/WebP for us (see lib/imageLoader.ts).
+    loader: "custom",
+    loaderFile: "./lib/imageLoader.ts",
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
     qualities: [60, 75, 85],
   },
