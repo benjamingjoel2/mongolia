@@ -27,7 +27,7 @@ export const palette = {
 } as const;
 
 export const contact = {
-  email: "hello@steppeandsky.example.com", // PLACEHOLDER
+  email: "steppeandsky@tourground.com",
   phone: "+976 0000 0000", // PLACEHOLDER
   phoneHref: "tel:+97600000000", // PLACEHOLDER
   whatsappNumber: "97600000000", // PLACEHOLDER, digits only, used for wa.me/[NUMBER]
