@@ -11,7 +11,7 @@ export const site = {
     "Real Mongolia, done properly. Planned by one dedicated specialist and led by local guides.",
   description:
     "Small-group and private adventures across Mongolia: the steppe, the Gobi Desert and the Altai, with nomad families, local guides and drivers. Planned by one dedicated specialist from your first message to the day you fly home.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://steppeandsky.example.com", // PLACEHOLDER
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://steppeandsky.tourground.com",
   locale: "en",
 } as const;
 

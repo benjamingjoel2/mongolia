@@ -38,5 +38,5 @@ npm run lint
 
 ## Deploy
 
-Hosted on Vercel (project `steppe-and-sky`). Production: <https://steppe-and-sky.vercel.app>.
+Hosted on Vercel (project `mongolia` in the benjamin-sevo team). Production: <https://steppeandsky.tourground.com> (subdomain of tourground.com, DNS on Vercel).
 Set `NEXT_PUBLIC_SITE_URL` to the production domain (used for canonical URLs, sitemap and Open Graph).
