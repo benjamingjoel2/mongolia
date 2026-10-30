@@ -1,7 +1,7 @@
 import { DisplayHeading } from "@/components/ui/DisplayHeading";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { ArrowLink } from "@/components/ui/ArrowLink";
-import { whatsappHref } from "@/config/site";
+import { contact } from "@/config/site";
 
 /** Closing call to action: big italic headline and the red blob button. */
 export function CtaBand({
@@ -26,8 +26,8 @@ export function CtaBand({
           <BlobButton href={href} size="lg">
             {button}
           </BlobButton>
-          <ArrowLink href={whatsappHref} external arrowClassName="text-gobi">
-            Or message us on WhatsApp
+          <ArrowLink href={`mailto:${contact.email}`} external arrowClassName="text-gobi">
+            Or email us
           </ArrowLink>
         </div>
       </div>

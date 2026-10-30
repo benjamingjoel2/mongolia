@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { adventures, getAdventure, getFestival, getRegion, getStay, pick, testimonialsFor, getExperience } from "@/lib/content";
+import { adventures, getAdventure, getFestival, getRegion, getStay, pick, getExperience } from "@/lib/content";
 import { difficultyLabels, monthNames, seasonLabels, styleLabels } from "@/data/taxonomy";
 import type { Adventure, Meal } from "@/data/types";
 import { site } from "@/config/site";
@@ -13,7 +13,6 @@ import { Accordion } from "@/components/sections/Accordion";
 import { MongoliaMap } from "@/components/sections/MongoliaMap";
 import { JoinCarousel } from "@/components/sections/JoinCarousel";
 import { ExpandCards } from "@/components/sections/ExpandCards";
-import { QuoteCycler } from "@/components/sections/QuoteCycler";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { DisplayHeading } from "@/components/ui/DisplayHeading";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -74,7 +73,6 @@ export default async function AdventurePage({ params }: Params) {
     .slice(0, 5)
     .map(({ x }) => x);
 
-  const quotes = testimonialsFor(a.slug).map((t) => ({ id: t.id, quote: t.quote, name: t.name, detail: t.country, placeholder: t.placeholder }));
 
   const facts: { label: string; value: React.ReactNode }[] = [
     { label: "Region", value: regionList.map((r) => r.shortName).join(" · ") },
@@ -143,9 +141,9 @@ export default async function AdventurePage({ params }: Params) {
             </div>
           ))}
           <div className="flex flex-col items-start gap-3 lg:items-end">
-            <dt className="text-micro uppercase tracking-[0.04em] text-charcoal/70">From, per person</dt>
+            <dt className="text-micro uppercase tracking-[0.04em] text-charcoal/70">Per person</dt>
             <dd className="flex flex-col items-start gap-3 lg:items-end">
-              <Price usd={a.priceFromUSD} className="text-[32px] font-medium leading-none tracking-[-0.04em] md:text-[40px]" />
+              <span className="text-[32px] font-medium leading-none tracking-[-0.04em] md:text-[40px]">From <Price usd={a.priceFromUSD} /></span>
               <BlobButton href={planHref}>Plan this adventure</BlobButton>
             </dd>
           </div>
@@ -324,14 +322,6 @@ export default async function AdventurePage({ params }: Params) {
         </ul>
       </section>
 
-      {quotes.length > 0 && (
-        <section data-theme="light" className="gutter bg-sand py-20 md:py-[8vw]">
-          <div className="md:pl-[26.5vw]">
-            <p className="text-micro mb-10 uppercase tracking-[0.04em] text-felt">Travellers on this route</p>
-            <QuoteCycler quotes={quotes} />
-          </div>
-        </section>
-      )}
 
       {/* Experiences on this trip */}
       <section data-theme="light" className="gutter py-16 md:py-[6vw]">
@@ -396,7 +386,7 @@ function DeparturesTable({ adventure: a, planHref }: { adventure: Adventure; pla
                 </span>
               </td>
               <td className="py-5 pr-6 text-right">
-                <Price usd={d.priceUSD} className="text-[20px] font-medium tracking-[-0.03em] md:text-[24px]" />
+                <span className="text-[20px] font-medium tracking-[-0.03em] md:text-[24px]">From <Price usd={d.priceUSD} /></span>
               </td>
               <td className="py-5 text-right">
                 {d.status !== "full" && (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { contact, footerNav, legalNav, planHref, site, whatsappHref } from "@/config/site";
+import { contact, footerNav, legalNav, planHref, site } from "@/config/site";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { Emphasis } from "@/components/ui/DisplayHeading";
@@ -40,13 +40,7 @@ export function Footer() {
             <ArrowLink href={`mailto:${contact.email}`} external arrowClassName="text-felt" className="text-[16px] md:text-[18px]">
               {contact.email}
             </ArrowLink>
-            <ArrowLink href={whatsappHref} external arrowClassName="text-felt" className="text-[16px] md:text-[18px]">
-              WhatsApp {contact.phone}
-            </ArrowLink>
-            <ArrowLink href={contact.phoneHref} external arrowClassName="text-felt" className="text-[16px] md:text-[18px]">
-              Call {contact.phone}
-            </ArrowLink>
-            <span className="text-[14px] text-charcoal/70">{contact.hours}</span>
+            <span className="text-[14px] text-charcoal/70">{contact.address}</span>
           </address>
         </div>
 

@@ -5,7 +5,6 @@ import { site } from "@/config/site";
 import { Header } from "@/components/layout/Header";
 import { MobileBar } from "@/components/layout/MobileBar";
 import { Footer } from "@/components/layout/Footer";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { MotionProvider } from "@/components/layout/MotionProvider";
 import "./globals.css";
 
@@ -62,7 +61,6 @@ export default function RootLayout({
           <main id="main">{children}</main>
           <Footer />
           <MobileBar />
-          <WhatsAppButton />
           {modal}
         </MotionProvider>
       </body>

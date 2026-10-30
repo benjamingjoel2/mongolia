@@ -33,7 +33,7 @@ export const budgetChoices = [
   { value: "unsure", min: null, max: null },
 ] as const;
 
-export const contactChoices = ["Email", "WhatsApp", "Telephone"] as const;
+export const contactChoices = ["Email", "Telephone"] as const;
 
 export const dialCodes = [
   { code: "+1", label: "US/Canada +1" },
@@ -110,7 +110,7 @@ export const stepContact = z
     consent: z.literal(true, { message: "Please agree so we can reply to you" }),
   })
   .refine((v) => !v.contactMethods.some((m) => m !== "Email") || v.phone.replace(/\D/g, "").length >= 6, {
-    message: "Add a phone number for WhatsApp or telephone",
+    message: "Add a phone number so we can call you",
     path: ["phone"],
   });
 

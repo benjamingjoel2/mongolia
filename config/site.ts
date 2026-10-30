@@ -11,7 +11,7 @@ export const site = {
     "Real Mongolia, done properly. Planned by one dedicated specialist and led by local guides.",
   description:
     "Small-group and private adventures across Mongolia: the steppe, the Gobi Desert and the Altai, with nomad families, local guides and drivers. Planned by one dedicated specialist from your first message to the day you fly home.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://steppeandsky.example.com", // PLACEHOLDER
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://steppeandsky.tourground.com",
   locale: "en",
 } as const;
 
@@ -27,21 +27,17 @@ export const palette = {
 } as const;
 
 export const contact = {
-  email: "hello@steppeandsky.example.com", // PLACEHOLDER
-  phone: "+976 0000 0000", // PLACEHOLDER
-  phoneHref: "tel:+97600000000", // PLACEHOLDER
-  whatsappNumber: "97600000000", // PLACEHOLDER, digits only, used for wa.me/[NUMBER]
-  whatsappMessage: "Hello Steppe & Sky, I'd like to plan an adventure in Mongolia.",
-  address: "Ulaanbaatar, Mongolia", // PLACEHOLDER
-  hours: "Mon to Fri, 9:00 to 18:00 Ulaanbaatar time (UTC+8)",
-  social: {
-    instagram: "https://instagram.com/", // PLACEHOLDER
+  /** One inbox for guests, trade and press. The site shows no phone, WhatsApp, social links or licence numbers. */
+  email: "steppeandsky@tourground.com",
+  /** Business address: Regus at Central Tower, Ulaanbaatar's premium office tower on the main square. */
+  address: "Regus Central Tower, Great Chinggis Khaan Square 2, Sükhbaatar District, Ulaanbaatar, Mongolia",
+  postalAddress: {
+    streetAddress: "Central Tower, Great Chinggis Khaan Square 2",
+    addressLocality: "Ulaanbaatar",
+    addressRegion: "Sükhbaatar District",
+    addressCountry: "MN",
   },
 } as const;
-
-export const whatsappHref = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(
-  contact.whatsappMessage,
-)}`;
 
 /* ---------- Currencies ---------- */
 
@@ -110,15 +106,15 @@ export const footerNav: NavItem[][] = [
   ],
   [
     { label: "About", href: "/about" },
-    { label: "Testimonials", href: "/testimonials" },
     { label: "Journal", href: "/journal" },
     { label: "Contact", href: "/contact" },
   ],
 ];
 
 export const legalNav: NavItem[] = [
-  { label: "Booking terms", href: "/faq#cancellations" }, // PLACEHOLDER until real terms exist
-  { label: "Privacy", href: "/contact#privacy" }, // PLACEHOLDER
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Booking Terms", href: "/booking-terms" },
+  { label: "Cookie Policy", href: "/cookies" },
 ];
 
 export const planHref = "/plan-my-adventure";

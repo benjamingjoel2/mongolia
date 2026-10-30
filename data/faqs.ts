@@ -125,7 +125,7 @@ export const faqs: Faq[] = [
     topic: "Booking",
     question: "What happens if I need to cancel?",
     answer: [
-      "[PLACEHOLDER] Our full cancellation terms, deposit and payment schedule will be confirmed in our booking conditions, which you will receive before you pay anything.",
+      "Cancellation charges, the deposit and the payment schedule are set out in your quote and in our booking terms, and you receive them before you pay anything.",
       "This is another reason comprehensive travel insurance with cancellation cover is essential from the moment you book.",
     ],
   },

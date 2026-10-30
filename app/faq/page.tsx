@@ -56,8 +56,6 @@ export default function FaqPage() {
                         <span className="rounded-full bg-gobi px-3 py-1 text-[12px] font-medium uppercase tracking-[0.03em] text-charcoal">
                           Verify against official sources
                         </span>
-                      ) : f.id === "cancellations" ? (
-                        <span className="rounded-full border border-charcoal/30 px-3 py-1 text-[12px] uppercase tracking-[0.03em] text-charcoal/70">Placeholder</span>
                       ) : undefined,
                     content: (
                       <div className="flex flex-col gap-4">
@@ -74,7 +72,7 @@ export default function FaqPage() {
           ))}
         </div>
       </section>
-      <CtaBand title="*Still* wondering?" text="Ask your specialist anything, by planner, email or WhatsApp. Real answers from someone who has been there." />
+      <CtaBand title="*Still* wondering?" text="Ask your specialist anything, by planner or email. Real answers from someone who has been there." />
     </>
   );
 }

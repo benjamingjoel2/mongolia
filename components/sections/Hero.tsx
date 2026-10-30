@@ -156,9 +156,6 @@ export function Hero({
         </div>
       )}
 
-      {image.credit && (
-        <span className="absolute bottom-2 right-3 z-10 hidden text-[10px] text-offwhite/50 md:block">Photo: {image.credit}</span>
-      )}
     </section>
   );
 }

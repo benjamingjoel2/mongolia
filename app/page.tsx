@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { planHref, site } from "@/config/site";
+import { contact, planHref, site } from "@/config/site";
 import { images } from "@/lib/images";
-import { adventures, getAdventure, getPerson, getRegion, pick, testimonials } from "@/lib/content";
+import { adventures, getAdventure, getRegion, pick } from "@/lib/content";
 import { difficultyLabels, seasonLabels } from "@/data/taxonomy";
 import type { AdventureSlug } from "@/data/types";
 import { Hero } from "@/components/sections/Hero";
@@ -9,7 +9,6 @@ import { IntroReel } from "@/components/sections/IntroReel";
 import { StoryMosaic, type MosaicItem } from "@/components/sections/StoryMosaic";
 import { JoinCarousel, type CarouselCard } from "@/components/sections/JoinCarousel";
 import { ExpandCards, type ExpandCard } from "@/components/sections/ExpandCards";
-import { QuoteCycler } from "@/components/sections/QuoteCycler";
 import { DisplayHeading } from "@/components/ui/DisplayHeading";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
@@ -95,7 +94,6 @@ export default function Home() {
     },
   ];
 
-  const specialist = getPerson("specialist-saraa");
   const people: ExpandCard[] = [
     {
       id: "guides",
@@ -103,13 +101,13 @@ export default function Home() {
       title: "Local guides and drivers",
       body: "Guides who grew up in the regions you travel through, and drivers who know every river crossing. They speak your language and the herders' too, and they set the pace with you, not for you.",
       image: images.herderPreparingHorse,
-      link: { label: "Meet the team", href: "/about#team" },
+      link: { label: "About us", href: "/about" },
     },
     {
       id: "specialist",
       eyebrow: "From the first message",
       title: "One dedicated specialist",
-      body: `${specialist ? specialist.name.replace(" (placeholder)", "") : "Your specialist"} plans your trip from the first message to the day you fly home: routes, camps, dietary needs, festival tickets and every transfer. One person, one thread, no call centre.`,
+      body: `Your specialist plans your trip from the first message to the day you fly home: routes, camps, dietary needs, festival tickets and every transfer. One person, one thread, no call centre.`,
       image: images.gerSunsetCar,
       link: { label: "How we plan", href: "/about" },
     },
@@ -123,16 +121,21 @@ export default function Home() {
     },
   ];
 
-  const quotes = testimonials.map((t) => ({
-    id: t.id,
-    quote: t.quote,
-    name: t.name,
-    detail: `${t.country} · ${getAdventure(t.adventure)?.shortTitle ?? ""}`,
-    placeholder: t.placeholder,
-  }));
+
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    name: site.name,
+    description: site.description,
+    url: site.url,
+    email: contact.email,
+    address: { "@type": "PostalAddress", ...contact.postalAddress },
+    areaServed: { "@type": "Country", name: "Mongolia" },
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       <IntroReel />
       <Hero
         image={images.gersSnowPeaks}
@@ -184,12 +187,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section data-theme="dark" className="bg-charcoal py-24 text-offwhite md:py-[9vw]">
-        <div className="gutter md:pl-[30vw]">
-          <p className="text-micro mb-10 uppercase tracking-[0.04em] text-gobi md:mb-14">From the steppe</p>
-          <QuoteCycler quotes={quotes} />
-        </div>
-      </section>
     </>
   );
 }

@@ -54,10 +54,3 @@ export const SoundOn = ({ className }: P) => (
   </svg>
 );
 
-/** Generic chat-bubble mark for the WhatsApp button (not the WhatsApp logo). */
-export const ChatIcon = ({ className }: P) => (
-  <svg aria-hidden viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8">
-    <path d="M12 3.5a8.5 8.5 0 00-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1012 3.5z" />
-    <path d="M8.8 9.2c.2 2.9 3 5.6 5.9 5.9l1.2-1.4-1.9-1-1 .8a4.6 4.6 0 01-2.6-2.6l.8-1-1-1.9z" fill="currentColor" stroke="none" />
-  </svg>
-);

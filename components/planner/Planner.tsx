@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { stepKeys, stepLabels, stepSchemas } from "@/lib/planner";
-import { contact as contactInfo, whatsappHref } from "@/config/site";
+import { contact as contactInfo } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { BlobActionButton } from "@/components/ui/BlobButton";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -397,8 +397,8 @@ function Confirmation({
         ))}
       </ol>
       <div className="mt-14 flex flex-col gap-4 md:flex-row md:gap-10">
-        <ArrowLink href={whatsappHref} external arrowClassName="text-gobi">
-          Say hello on WhatsApp
+        <ArrowLink href={`mailto:${contactInfo.email}`} external arrowClassName="text-gobi">
+          Email us
         </ArrowLink>
         <ArrowLink href="/adventures" arrowClassName="text-gobi">
           Browse adventures
