@@ -56,14 +56,6 @@ export type StaySlug =
   | "altai-family-gers"
   | "khentii-steppe-camp";
 
-export type PersonSlug =
-  | "specialist-saraa"
-  | "guide-bat"
-  | "guide-oyuna"
-  | "guide-erlan"
-  | "driver-ganaa"
-  | "guide-tuya";
-
 export type Activity =
   | "overland"
   | "horse-riding"
@@ -236,33 +228,6 @@ export interface Stay {
   description: string;
   facilities: string[];
   image: Img;
-}
-
-/* ---------- People ---------- */
-
-export interface Person {
-  slug: PersonSlug;
-  /** PLACEHOLDER first name until real team profiles are supplied. */
-  name: string;
-  placeholder: true;
-  role: "specialist" | "guide" | "driver";
-  title: string;
-  bio: string;
-  languages: string[];
-  regions: RegionSlug[];
-  image: Img;
-}
-
-/* ---------- Testimonials ---------- */
-
-export interface Testimonial {
-  id: string;
-  quote: string;
-  name: string;
-  country: string;
-  adventure: AdventureSlug;
-  /** All seed testimonials are invented placeholders and must be labelled as such. */
-  placeholder: true;
 }
 
 /* ---------- FAQs ---------- */

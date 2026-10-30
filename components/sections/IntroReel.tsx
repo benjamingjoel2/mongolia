@@ -105,7 +105,8 @@ export function IntroReel() {
                   animate={{ opacity: i === index ? 1 : 0, scale: i === index ? 1.08 : 1 }}
                   transition={{ opacity: { duration: 1.2 }, scale: { duration: intro.durationMs / reel.length / 1000 + 1.5, ease: "linear" } }}
                 >
-                  <Photo image={image} sizes="100vw" priority={i === 0} quality={60} alt="" />
+                  {/* Only the current and next frames are mounted, so the reel never downloads four full-screen photos up front. */}
+                  {i <= index + 1 ? <Photo image={image} sizes="100vw" priority={i === 0} quality={60} alt="" /> : null}
                 </motion.div>
               ))
             )}

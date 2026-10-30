@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { contact, mainNav, mobileBarNav, planHref, site, whatsappHref } from "@/config/site";
+import { contact, mainNav, mobileBarNav, planHref, site } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { BlobTab } from "@/components/ui/Blob";
 import { BlobButton } from "@/components/ui/BlobButton";
@@ -169,9 +169,6 @@ function MenuSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
                 Plan my adventure
               </BlobButton>
               <div className="flex flex-col gap-3">
-                <ArrowLink href={whatsappHref} external arrowClassName="text-gobi">
-                  WhatsApp us
-                </ArrowLink>
                 <ArrowLink href={`mailto:${contact.email}`} external arrowClassName="text-gobi">
                   {contact.email}
                 </ArrowLink>

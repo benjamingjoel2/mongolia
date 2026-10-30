@@ -8,13 +8,12 @@ export interface Img {
   alt: string;
   /** Natural orientation of the source photo, used to pick sensible crops. */
   orientation: "landscape" | "portrait";
-  credit: string;
 }
 
 const u = (id: string) => `https://images.unsplash.com/photo-${id}`;
 
 function img(id: string, alt: string, orientation: Img["orientation"] = "landscape"): Img {
-  return { src: u(id), alt, orientation, credit: "Unsplash" };
+  return { src: u(id), alt, orientation };
 }
 
 export const images = {

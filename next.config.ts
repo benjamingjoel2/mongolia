@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  async redirects() {
+    // Testimonials were removed (none are real yet); old links go to About.
+    return [{ source: "/testimonials", destination: "/about", permanent: true }];
+  },
   images: {
     // Unsplash's CDN resizes and serves AVIF/WebP for us (see lib/imageLoader.ts).
     loader: "custom",
