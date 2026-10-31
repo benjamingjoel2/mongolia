@@ -11,6 +11,9 @@ import { builtinModules } from "node:module";
 const run = (cmd) => execSync(cmd, { stdio: "inherit" });
 
 run("npm run cf-build");
+// Copy the prerendered pages into the assets (no-op if cf-build already did it), so pages
+// are served from the build instead of being rendered on every request.
+run("npx opennextjs-cloudflare populateCache local");
 fs.rmSync(".cf-bundle", { recursive: true, force: true });
 run("npx wrangler deploy --dry-run --outdir .cf-bundle");
 fs.rmSync("dist-pages", { recursive: true, force: true });
