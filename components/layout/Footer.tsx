@@ -1,9 +1,10 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { contact, footerNav, legalNav, planHref, site } from "@/config/site";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { Emphasis } from "@/components/ui/DisplayHeading";
 import { Year } from "@/components/ui/Year";
+import { t } from "@/lib/i18n/server";
 
 /**
  * Footer in the reference's minimal style: rows of "→" links with red arrows,
@@ -15,10 +16,10 @@ export function Footer() {
       <div className="gutter pt-20 md:pt-32">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <p className="text-h1 max-w-[12ch] text-balance">
-            <Emphasis text="Nothing between you and the *sky*." />
+            <Emphasis text={t("Nothing between you and the *sky*.")} />
           </p>
           <BlobButton href={planHref} size="lg" className="self-start md:self-end">
-            Plan my adventure
+            {t("Plan my adventure")}
           </BlobButton>
         </div>
 
@@ -30,7 +31,7 @@ export function Footer() {
               {col.map((item) => (
                 <li key={item.href}>
                   <ArrowLink href={item.href} arrowClassName="text-felt" className="text-[16px] md:text-[18px]">
-                    {item.label}
+                    {t(item.label)}
                   </ArrowLink>
                 </li>
               ))}
@@ -40,7 +41,7 @@ export function Footer() {
             <ArrowLink href={`mailto:${contact.email}`} external arrowClassName="text-felt" className="text-[16px] md:text-[18px]">
               {contact.email}
             </ArrowLink>
-            <span className="text-[14px] text-charcoal/70">{contact.address}</span>
+            <span className="text-[14px] text-charcoal/70">{t(contact.address)}</span>
           </address>
         </div>
 
@@ -51,11 +52,11 @@ export function Footer() {
             </span>
             {legalNav.map((l) => (
               <Link key={l.href} href={l.href} className="underline-offset-4 hover:underline">
-                {l.label}
+                {t(l.label)}
               </Link>
             ))}
           </div>
-          <span className="text-charcoal/70">Planned with local families, guides and drivers across Mongolia</span>
+          <span className="text-charcoal/70">{t("Planned with local families, guides and drivers across Mongolia")}</span>
         </div>
       </div>
     </footer>

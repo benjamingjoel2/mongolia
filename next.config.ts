@@ -6,8 +6,14 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   async redirects() {
-    // Testimonials were removed (none are real yet); old links go to About.
-    return [{ source: "/testimonials", destination: "/about", permanent: true }];
+    return [
+      // English lives at the root: /en/... is the same page.
+      { source: "/en", destination: "/", permanent: true },
+      { source: "/en/:path((?!opengraph-image).*)", destination: "/:path", permanent: true },
+      // Testimonials were removed (none are real yet); old links go to About.
+      { source: "/testimonials", destination: "/about", permanent: true },
+      { source: "/:locale(fr|de|es)/testimonials", destination: "/:locale/about", permanent: true },
+    ];
   },
   images: {
     // Unsplash's CDN resizes and serves AVIF/WebP for us (see lib/imageLoader.ts).

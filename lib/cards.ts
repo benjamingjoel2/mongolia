@@ -2,13 +2,16 @@ import type { Adventure, Experience, Region } from "@/data/types";
 import type { CarouselCard } from "@/components/sections/JoinCarousel";
 import type { MosaicItem } from "@/components/sections/StoryMosaic";
 import { difficultyLabels } from "@/data/taxonomy";
+import { t } from "@/lib/i18n/server";
+
+/* Server-side card builders: data arrives translated; labels are translated here. */
 
 /** Adventure → carousel card ("Join" track style). */
 export function adventureCard(a: Adventure): CarouselCard {
   return {
     id: a.slug,
     title: a.title,
-    stat: `${a.days} days · ${difficultyLabels[a.difficulty].label}`,
+    stat: `${t("{n} days", { n: a.days })} · ${t(difficultyLabels[a.difficulty].label)}`,
     href: `/adventures/${a.slug}`,
     image: a.hero,
   };

@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { motion, useReducedMotion } from "framer-motion";
 import { capital, outlinePath, proj } from "@/lib/map";
 import { cn } from "@/lib/cn";
+import { useT } from "@/lib/i18n/client";
 
 export interface MapMarker {
   id: string;
@@ -23,7 +24,7 @@ export function MongoliaMap({
   route,
   tone = "light",
   className,
-  label = "Map of Mongolia",
+  label,
 }: {
   markers?: MapMarker[];
   route?: { label: string; x: number; y: number }[];
@@ -32,6 +33,7 @@ export function MongoliaMap({
   label?: string;
 }) {
   const reduce = useReducedMotion();
+  const t = useT();
   const routePts = route?.map(proj) ?? [];
   const routeD = routePts.map((p, i) => `${i ? "L" : "M"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join("");
   const ub = proj(capital);
@@ -39,7 +41,7 @@ export function MongoliaMap({
 
   return (
     <figure className={cn("relative", className)}>
-      <svg viewBox="-6 -8 221 116" role={markers.some((m) => m.href) ? "group" : "img"} aria-label={label} className={cn("h-auto w-full overflow-visible", ink)}>
+      <svg viewBox="-6 -8 221 116" role={markers.some((m) => m.href) ? "group" : "img"} aria-label={label ?? t("Map of Mongolia")} className={cn("h-auto w-full overflow-visible", ink)}>
         <defs>
           <pattern id="map-grain" width="3" height="3" patternUnits="userSpaceOnUse">
             <circle cx="1.5" cy="1.5" r="0.35" className="fill-current opacity-25" />
@@ -53,7 +55,7 @@ export function MongoliaMap({
         <g>
           <rect x={ub.x - 1.4} y={ub.y - 1.4} width="2.8" height="2.8" className="fill-current" transform={`rotate(45 ${ub.x} ${ub.y})`} />
           <text x={ub.x + 2.8} y={ub.y - 2} className="fill-current text-[3.2px] font-medium">
-            Ulaanbaatar
+            {t("Ulaanbaatar")}
           </text>
         </g>
 
@@ -110,7 +112,7 @@ export function MongoliaMap({
         })}
       </svg>
       <figcaption className={cn("mt-3 text-[12px] tracking-[-0.01em] md:text-[13px]", tone === "dark" ? "text-offwhite/60" : "text-charcoal/70")}>
-        Stylised map, not to scale. Map placeholder.
+        {t("Stylised map, not to scale.")}
       </figcaption>
       {route && route.length > 0 && (
         <ol className={cn("mt-6 grid gap-x-8 gap-y-2 sm:grid-cols-2 md:grid-cols-3", tone === "dark" ? "text-offwhite/85" : "text-charcoal/85")}>

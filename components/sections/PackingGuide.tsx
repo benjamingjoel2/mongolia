@@ -5,21 +5,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { PackingCategory, Season } from "@/data/types";
 import { cn } from "@/lib/cn";
 import { Photo } from "@/components/ui/Photo";
+import { msg } from "@/lib/i18n/core";
+import { useT } from "@/lib/i18n/client";
 
 const modes: { value: "summer" | "winter"; label: string; seasons: Season[] }[] = [
-  { value: "summer", label: "Summer trips (May to Sep)", seasons: ["spring", "summer", "autumn"] },
-  { value: "winter", label: "Winter trips (Nov to Mar)", seasons: ["winter"] },
+  { value: "summer", label: msg("Summer trips (May to Sep)"), seasons: ["spring", "summer", "autumn"] },
+  { value: "winter", label: msg("Winter trips (Nov to Mar)"), seasons: ["winter"] },
 ];
 
 /** Packing lists with a season switch styled like the filter chips. */
 export function PackingGuide({ categories }: { categories: PackingCategory[] }) {
+  const t = useT();
   const [mode, setMode] = useState<"summer" | "winter">("summer");
   const seasons = modes.find((m) => m.value === mode)!.seasons;
   const visible = categories.filter((c) => c.seasons.some((s) => seasons.includes(s)));
 
   return (
     <div>
-      <div role="radiogroup" aria-label="Season" className="mb-12 flex flex-wrap gap-2 md:mb-16">
+      <div role="radiogroup" aria-label={t("Season")} className="mb-12 flex flex-wrap gap-2 md:mb-16">
         {modes.map((m) => (
           <button
             key={m.value}
@@ -32,7 +35,7 @@ export function PackingGuide({ categories }: { categories: PackingCategory[] }) 
               mode === m.value ? "border-charcoal bg-charcoal text-offwhite" : "border-charcoal/25 hover:border-charcoal",
             )}
           >
-            {m.label}
+            {t(m.label)}
           </button>
         ))}
       </div>

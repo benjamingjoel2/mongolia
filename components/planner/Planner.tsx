@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { stepKeys, stepLabels, stepSchemas } from "@/lib/planner";
@@ -21,15 +21,17 @@ import {
   type PlannerValues,
   type RegionOption,
 } from "./steps";
+import { msg } from "@/lib/i18n/core";
+import { useT } from "@/lib/i18n/client";
 
 const STORAGE_KEY = "sns.planner.v1";
 
 const titles = [
-  "*When* are you dreaming of?",
-  "*Where* to, and what for?",
-  "Your travel *style*",
-  "*Who's* coming along?",
-  "How do we *reach* you?",
+  msg("*When* are you dreaming of?"),
+  msg("*Where* to, and what for?"),
+  msg("Your travel *style*"),
+  msg("*Who's* coming along?"),
+  msg("How do we *reach* you?"),
 ];
 
 interface Saved {
@@ -60,7 +62,11 @@ function loadSaved(): Saved | null {
 }
 
 /** Seed from links like /plan-my-adventure?festival=naadam&adventure=altai-mountains-trek&region=gobi */
-function fromQuery(values: PlannerValues): { values: PlannerValues; source?: string } {
+function fromQuery(
+  values: PlannerValues,
+  t: (s: string, v?: Record<string, string>) => string,
+  adventureTitles: Record<string, string>,
+): { values: PlannerValues; source?: string } {
   const p = new URLSearchParams(window.location.search);
   const festival = p.get("festival");
   const region = p.get("region");
@@ -73,8 +79,10 @@ function fromQuery(values: PlannerValues): { values: PlannerValues; source?: str
   if (region && !next.where.regions.includes(region)) next.where.regions.push(region);
   const departure = p.get("departure");
   if (adventure && !next.contact.notes) {
-    const name = adventure.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-    next.contact.notes = `I'm interested in: ${name}${departure ? ` (departure starting ${departure})` : ""}.`;
+    const name = adventureTitles[adventure] ?? adventure.replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+    next.contact.notes = departure
+      ? t("I'm interested in: {name} (departure starting {date}).", { name, date: departure })
+      : t("I'm interested in: {name}.", { name });
   }
   return { values: next, source: adventure ? `adventure:${adventure}` : festival ? `festival:${festival}` : undefined };
 }
@@ -82,33 +90,33 @@ function fromQuery(values: PlannerValues): { values: PlannerValues; source?: str
 const noop = () => () => {};
 
 /** Renders the planner only after hydration so saved progress can seed the initial state. */
-export function Planner(props: { regions: RegionOption[]; monthHints: MonthHint[]; inModal?: boolean; onClose?: () => void }) {
+export function Planner(props: PlannerProps) {
   const hydrated = useSyncExternalStore(noop, () => true, () => false);
+  const t = useT();
   if (!hydrated)
     return (
       <div className="min-h-[70vh] pt-[calc(3.5rem+2px+2.5rem)] md:pt-[calc(3.5rem+2px+4rem)]" aria-busy="true">
         <h2 className="text-h1 mb-10 max-w-[16ch] md:mb-16">
-          <Emphasis text={titles[0]} />
+          <Emphasis text={t(titles[0])} />
         </h2>
       </div>
     );
   return <PlannerInner {...props} />;
 }
 
-function PlannerInner({
-  regions,
-  monthHints,
-  inModal,
-  onClose,
-}: {
+type PlannerProps = {
   regions: RegionOption[];
   monthHints: MonthHint[];
+  adventureTitles?: Record<string, string>;
   inModal?: boolean;
   onClose?: () => void;
-}) {
+};
+
+function PlannerInner({ regions, monthHints, adventureTitles = {}, inModal, onClose }: PlannerProps) {
+  const t = useT();
   const [initial] = useState(() => {
     const saved = loadSaved();
-    const seeded = fromQuery(saved?.values ?? initialValues);
+    const seeded = fromQuery(saved?.values ?? initialValues, t, adventureTitles);
     return { step: saved?.step ?? 0, maxStep: saved?.maxStep ?? 0, values: seeded.values, source: seeded.source, restored: Boolean(saved) };
   });
   const [step, setStep] = useState(initial.step);
@@ -234,7 +242,7 @@ function PlannerInner({
   return (
     <div ref={top} className="flex flex-col">
       {/* Progress: step labels with the moving blob, plus a progress line */}
-      <nav aria-label="Planner steps" className={cn("sticky z-10", inModal ? "top-0" : "top-14", " -mx-[var(--gutter)] bg-charcoal/95 px-[var(--gutter)] backdrop-blur-md")}>
+      <nav aria-label={t("Planner steps")} className={cn("sticky z-10", inModal ? "top-0" : "top-14", " -mx-[var(--gutter)] bg-charcoal/95 px-[var(--gutter)] backdrop-blur-md")}>
         <LayoutGroup id="planner-steps">
           <ol className="hidden items-stretch gap-1 md:flex">
             {stepLabels.map((label, i) => {
@@ -260,7 +268,7 @@ function PlannerInner({
                     )}
                   >
                     <span className="tabular-nums opacity-60">{String(i + 1).padStart(2, "0")}</span>
-                    {label}
+                    {t(label)}
                   </button>
                 </li>
               );
@@ -269,11 +277,11 @@ function PlannerInner({
         </LayoutGroup>
         <div className="flex h-12 items-center justify-between text-[14px] md:hidden">
           <span>
-            Step {step + 1} of 5 · <span className="font-medium">{stepLabels[step]}</span>
+            {t("Step {n} of 5", { n: String(step + 1) })} · <span className="font-medium">{t(stepLabels[step])}</span>
           </span>
           {step > 0 && (
             <button type="button" className="underline underline-offset-4" onClick={() => go(step - 1)}>
-              Back
+              {t("Back")}
             </button>
           )}
         </div>
@@ -285,9 +293,9 @@ function PlannerInner({
       <div className="pb-10 pt-10 md:pt-16">
         {initial.restored && step === initial.step && (
           <p className="mb-6 inline-flex flex-wrap items-center gap-3 rounded-full bg-offwhite/10 px-4 py-2 text-[14px]">
-            Welcome back, we saved your answers on this device.
+            {t("Welcome back, we saved your answers on this device.")}
             <button type="button" onClick={reset} className="underline underline-offset-4 hover:text-gobi">
-              Start again
+              {t("Start again")}
             </button>
           </p>
         )}
@@ -302,7 +310,7 @@ function PlannerInner({
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 id="planner-step-title" className="text-h1 mb-10 max-w-[16ch] md:mb-16" tabIndex={-1}>
-              <Emphasis text={titles[step]} />
+              <Emphasis text={t(titles[step])} />
             </h2>
             {key === "when" && <StepWhen values={values.when} set={patch("when")} errors={errors} monthHints={monthHints} />}
             {key === "where" && <StepWhere values={values.where} set={patch("where")} errors={errors} regions={regions} />}
@@ -315,7 +323,7 @@ function PlannerInner({
 
       {status === "error" && (
         <p role="alert" className="mb-6 rounded-2xl bg-felt px-5 py-4 text-[16px]">
-          Sorry, your plan didn&apos;t send. Please try again, or email us at{" "}
+          {t("Sorry, your plan didn't send. Please try again, or email us at")}{" "}
           <a className="underline" href={`mailto:${contactInfo.email}`}>
             {contactInfo.email}
           </a>
@@ -333,15 +341,15 @@ function PlannerInner({
         <div className="flex items-center gap-6">
           {step > 0 ? (
             <button type="button" onClick={() => go(step - 1)} className="text-link group inline-flex items-baseline gap-2">
-              <span aria-hidden className="text-gobi transition-transform group-hover:-translate-x-1">←</span> Back
+              <span aria-hidden className="text-gobi transition-transform group-hover:-translate-x-1">←</span> {t("Back")}
             </button>
           ) : (
-            <span className="hidden text-[13px] text-offwhite/55 sm:inline">Takes about 3 minutes</span>
+            <span className="hidden text-[13px] text-offwhite/55 sm:inline">{t("Takes about 3 minutes")}</span>
           )}
-          <span className="hidden text-[13px] text-offwhite/55 md:inline">Progress saved on this device</span>
+          <span className="hidden text-[13px] text-offwhite/55 md:inline">{t("Progress saved on this device")}</span>
         </div>
         <BlobActionButton size="lg" onClick={next} disabled={status === "sending"} className="disabled:opacity-60">
-          {step < 4 ? "Continue" : status === "sending" ? "Sending…" : "Send my plan"}
+          {step < 4 ? t("Continue") : status === "sending" ? t("Sending…") : t("Send my plan")}
           <span aria-hidden>→</span>
         </BlobActionButton>
       </div>
@@ -364,7 +372,8 @@ function Confirmation({
   inModal?: boolean;
   onClose?: () => void;
 }) {
-  const first = name.trim().split(/\s+/)[0] || "traveller";
+  const t = useT();
+  const first = name.trim().split(/\s+/)[0] || t("traveller");
   const regionNames = values.where.regions.map((r) => regions.find((x) => x.slug === r)?.name).filter(Boolean);
   return (
     <motion.div
@@ -374,20 +383,21 @@ function Confirmation({
       className="py-10 md:py-16"
       role="status"
     >
-      <p className="text-micro uppercase tracking-[0.04em] text-gobi">Plan received{reference ? ` · Ref ${reference}` : ""}</p>
+      <p className="text-micro uppercase tracking-[0.04em] text-gobi">{t("Plan received")}{reference ? ` · ${t("Ref {ref}", { ref: reference })}` : ""}</p>
       <h2 className="text-story mt-6 max-w-[14ch]">
-        <em className="italic">Thank you</em>, {first}.
+        <Emphasis text={t("*Thank you*, {name}.", { name: first })} />
       </h2>
       <p className="text-lead mt-8 max-w-[34ch] text-offwhite/85">
-        Your specialist will read every answer and reply within two working days with first ideas
-        {regionNames.length ? ` for ${regionNames.join(", ")}` : ""}.
+        {regionNames.length
+          ? t("Your specialist will read every answer and reply within two working days with first ideas for {regions}.", { regions: regionNames.join(", ") })
+          : t("Your specialist will read every answer and reply within two working days with first ideas.")}
       </p>
       <div aria-hidden className="ornament-line mt-14 max-w-xl opacity-80" />
       <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-10">
         {[
-          ["01", "We read your plan", "A real person, your specialist, reviews your dates, interests and budget."],
-          ["02", "First ideas", "A suggested route, camps and a price, with honest notes on drives and comfort."],
-          ["03", "Shape it together", "Change anything until it feels right. Nothing is booked until you say so."],
+          ["01", t("We read your plan"), t("A real person, your specialist, reviews your dates, interests and budget.")],
+          ["02", t("First ideas"), t("A suggested route, camps and a price, with honest notes on drives and comfort.")],
+          ["03", t("Shape it together"), t("Change anything until it feels right. Nothing is booked until you say so.")],
         ].map(([n, t, d]) => (
           <li key={n}>
             <span className="text-micro tabular-nums text-offwhite/60">{n}</span>
@@ -398,18 +408,18 @@ function Confirmation({
       </ol>
       <div className="mt-14 flex flex-col gap-4 md:flex-row md:gap-10">
         <ArrowLink href={`mailto:${contactInfo.email}`} external arrowClassName="text-gobi">
-          Email us
+          {t("Email us")}
         </ArrowLink>
         <ArrowLink href="/adventures" arrowClassName="text-gobi">
-          Browse adventures
+          {t("Browse adventures")}
         </ArrowLink>
         {inModal ? (
           <button type="button" onClick={onClose} className="text-link inline-flex items-baseline gap-2 text-left">
-            <span className="text-gobi">→</span> Close
+            <span className="text-gobi">→</span> {t("Close")}
           </button>
         ) : (
           <Link href="/" className="text-link inline-flex items-baseline gap-2">
-            <span className="text-gobi">→</span> Back to home
+            <span className="text-gobi">→</span> {t("Back to home")}
           </Link>
         )}
       </div>

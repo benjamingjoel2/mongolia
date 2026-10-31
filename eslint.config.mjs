@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node build scripts (CommonJS) and local translation scratch files.
+    "scripts/**/*.cjs",
+    ".i18n-work/**",
+    "i18n/*.cjs",
   ]),
 ]);
 

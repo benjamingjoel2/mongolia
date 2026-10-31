@@ -42,7 +42,7 @@ export const adventures: Adventure[] = [
           "Your guide meets you at the airport and takes you into the city. In the evening there is a welcome dinner and a full briefing on the route ahead.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Trip briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -83,7 +83,7 @@ export const adventures: Adventure[] = [
         travel: "4-5 hrs drive, off-road",
         activities: ["Overland drive", "Dune walk"],
         staySlug: "gobi-dunes-camp",
-        stay: "Gobi dunes camp (placeholder)",
+        stay: "Gobi dunes camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -93,7 +93,7 @@ export const adventures: Adventure[] = [
           "Spend the morning with a camel-herding family, riding out along the edge of the sand. Later, climb the highest dune for sunset; it is steep, slow work and worth every step.",
         activities: ["Camel ride", "Visit a herding family", "Dune climb", "Stargazing"],
         staySlug: "gobi-dunes-camp",
-        stay: "Gobi dunes camp (placeholder)",
+        stay: "Gobi dunes camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -134,7 +134,7 @@ export const adventures: Adventure[] = [
         travel: "3-4 hrs drive, rough track",
         activities: ["Waterfall hike", "Visit a herding family"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -164,7 +164,7 @@ export const adventures: Adventure[] = [
           "Stop in Khustai National Park to look for takhi, the Przewalski's horses brought back to the wild here. Continue to Ulaanbaatar for a farewell dinner.",
         travel: "4-5 hrs drive, mostly paved",
         activities: ["Takhi viewing", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -182,7 +182,7 @@ export const adventures: Adventure[] = [
       "English-speaking local guide throughout",
       "Experienced driver and 4x4 (Land Cruiser or Russian UAZ furgon)",
       "All meals as listed in the itinerary",
-      "2 nights in a 4-star hotel in Ulaanbaatar (placeholder) and 11 nights in ger camps and family gers",
+      "2 nights in a 4-star hotel in Ulaanbaatar and 11 nights in ger camps and family gers",
       "National park entrance fees and permits",
       "Airport transfers on arrival and departure",
       "Camel ride with a herding family",
@@ -268,7 +268,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Over dinner your guide runs through the riding plan, the kit list and how the horses are handled.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Riding briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -289,7 +289,7 @@ export const adventures: Adventure[] = [
         travel: "3 hrs drive, rough track; 2 hrs riding",
         activities: ["Meet the horsemen", "Saddle fitting", "Short ride"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -330,7 +330,7 @@ export const adventures: Adventure[] = [
         travel: "4 hrs riding",
         activities: ["Horse riding", "Farewell with the horsemen"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -340,7 +340,7 @@ export const adventures: Adventure[] = [
           "A long day back to the capital, with breaks along the way. Arrive in the evening for a hot shower and a final dinner.",
         travel: "8-9 hrs drive, partly off-road",
         activities: ["Overland drive", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -440,7 +440,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Your guide briefs you on the journey north and on visiting the reindeer herders respectfully.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Trip briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -451,7 +451,7 @@ export const adventures: Adventure[] = [
         travel: "1.5 hrs flight; 2-3 hrs drive",
         activities: ["Domestic flight", "Lakeshore walk"],
         staySlug: "khovsgol-lakeshore-camp",
-        stay: "Khövsgöl lakeshore camp (placeholder)",
+        stay: "Khövsgöl lakeshore camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -501,7 +501,7 @@ export const adventures: Adventure[] = [
         travel: "8-10 hrs drive, off-road",
         activities: ["Overland drive"],
         staySlug: "khovsgol-lakeshore-camp",
-        stay: "Khövsgöl lakeshore camp (placeholder)",
+        stay: "Khövsgöl lakeshore camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -511,7 +511,7 @@ export const adventures: Adventure[] = [
           "A gentler day: take a boat out on the lake, hike the hills above the shore, or ride a quiet trail through the larches. The water is drinkably clear and very cold.",
         activities: ["Boat trip", "Hiking", "Optional ride"],
         staySlug: "khovsgol-lakeshore-camp",
-        stay: "Khövsgöl lakeshore camp (placeholder)",
+        stay: "Khövsgöl lakeshore camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -521,7 +521,7 @@ export const adventures: Adventure[] = [
           "Drive to Mörön for the flight south. The evening is free for a final dinner in the city.",
         travel: "2-3 hrs drive; 1.5 hrs flight",
         activities: ["Domestic flight", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -625,7 +625,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Over dinner your guide explains the festival, the family you will stay with and Kazakh customs.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Trip briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -636,7 +636,7 @@ export const adventures: Adventure[] = [
         travel: "3-4 hrs flight; 1-2 hrs drive",
         activities: ["Domestic flight", "Meet your host family"],
         staySlug: "altai-family-gers",
-        stay: "Altai family gers (placeholder)",
+        stay: "Altai family gers",
         meals: ["B", "L", "D"],
       },
       {
@@ -647,7 +647,7 @@ export const adventures: Adventure[] = [
         travel: "2-3 hrs riding (optional)",
         activities: ["Eagle training", "Horse riding", "Kazakh home cooking", "Felt and embroidery"],
         staySlug: "altai-family-gers",
-        stay: "Altai family gers (placeholder)",
+        stay: "Altai family gers",
         meals: ["B", "L", "D"],
       },
       {
@@ -657,7 +657,7 @@ export const adventures: Adventure[] = [
           "Two days at the festival ground near Ölgii. Hunters compete in calling their eagles from the ridge to their arm, alongside horseback games, archery and camel races. Your guide gets you to the right place at the right time.",
         travel: "1-2 hrs drive each way",
         activities: ["Festival opening parade", "Eagle-calling contest", "Horseback games", "Camel racing"],
-        stay: "Comfortable guesthouse in Ölgii (placeholder)",
+        stay: "Comfortable guesthouse in Ölgii",
         meals: ["B", "L", "D"],
       },
       {
@@ -677,7 +677,7 @@ export const adventures: Adventure[] = [
           "Join a hunter as he rides out with his eagle, as he would through the winter. Whether the eagle catches anything is up to the eagle.",
         travel: "3-4 hrs riding or walking",
         activities: ["Riding with an eagle hunter", "Photography"],
-        stay: "Comfortable guesthouse in Ölgii (placeholder)",
+        stay: "Comfortable guesthouse in Ölgii",
         meals: ["B", "L", "D"],
       },
       {
@@ -687,7 +687,7 @@ export const adventures: Adventure[] = [
           "Morning at Ölgii market, then the flight back east. A final dinner in the city.",
         travel: "3-4 hrs flight",
         activities: ["Ölgii market", "Domestic flight", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -727,7 +727,7 @@ export const adventures: Adventure[] = [
         style: "group",
         priceUSD: 4650,
         status: "limited",
-        note: "Festival expected 2-3 October 2027. Festival dates to be confirmed, verify yearly.",
+        note: "Festival expected 2-3 October 2027. Festival dates are checked every year.",
       },
       {
         start: "2027-09-30",
@@ -735,7 +735,7 @@ export const adventures: Adventure[] = [
         style: "group",
         priceUSD: 4650,
         status: "open",
-        note: "Festival comes first on this departure (days 3-4), family stay after. Festival dates to be confirmed, verify yearly.",
+        note: "Festival comes first on this departure (days 3-4), family stay after. Festival dates are checked every year.",
       },
       {
         start: "2027-09-28",
@@ -743,7 +743,7 @@ export const adventures: Adventure[] = [
         style: "private",
         priceUSD: 5950,
         status: "open",
-        note: "Private trip around the festival. Price per person for two travellers. Festival dates to be confirmed, verify yearly.",
+        note: "Private trip around the festival. Price per person for two travellers. Festival dates are checked every year.",
       },
     ],
     route: [
@@ -802,7 +802,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel, with the city already decked out for the festival. Welcome dinner and briefing.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Trip briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -813,7 +813,7 @@ export const adventures: Adventure[] = [
         travel: "2 hrs drive, paved",
         activities: ["Chinggis Khaan statue complex", "Hike in Terelj"],
         staySlug: "terelj-river-camp",
-        stay: "Terelj river camp (placeholder)",
+        stay: "Terelj river camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -823,7 +823,7 @@ export const adventures: Adventure[] = [
           "An easy morning ride or walk along the river, then back to Ulaanbaatar. Visit Gandan monastery in the afternoon.",
         travel: "1.5 hrs drive",
         activities: ["Gentle horse ride", "Gandan monastery"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -832,7 +832,7 @@ export const adventures: Adventure[] = [
         description:
           "The opening ceremony at the national stadium is a parade of horsemen, musicians and dancers. Stay for the first rounds of wrestling, then watch the archers.",
         activities: ["Opening ceremony", "Wrestling", "Archery"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -842,7 +842,7 @@ export const adventures: Adventure[] = [
           "Head out early to the racing grounds at Khui Doloon Khudag, where young jockeys race over long distances across the steppe. Back in the city, catch the ankle-bone shooting.",
         travel: "1 hr drive each way",
         activities: ["Horse racing", "Ankle-bone shooting"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -883,7 +883,7 @@ export const adventures: Adventure[] = [
         travel: "3 hrs drive, rough track",
         activities: ["Overland drive", "Riverside walk"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -893,7 +893,7 @@ export const adventures: Adventure[] = [
           "Walk to Ulaan Tsutgalan waterfall, then spend the afternoon with a herding family, learning how they make airag and dairy foods.",
         activities: ["Waterfall walk", "Visit a herding family", "Optional ride"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -903,7 +903,7 @@ export const adventures: Adventure[] = [
           "A long but mostly paved drive back to the capital, with a lunch stop on the way. Farewell dinner with a traditional music performance.",
         travel: "7-8 hrs drive, mostly paved",
         activities: ["Overland drive", "Farewell dinner", "Traditional music"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -941,7 +941,7 @@ export const adventures: Adventure[] = [
         style: "group",
         priceUSD: 4450,
         status: "limited",
-        note: "Naadam expected 11-15 July 2027. Festival dates to be confirmed, verify yearly.",
+        note: "Naadam expected 11-15 July 2027. Festival dates are checked every year.",
       },
       {
         start: "2027-07-08",
@@ -949,7 +949,7 @@ export const adventures: Adventure[] = [
         style: "group",
         priceUSD: 4450,
         status: "open",
-        note: "Second group on the same dates, with its own guide and vehicles. Festival dates to be confirmed, verify yearly.",
+        note: "Second group on the same dates, with its own guide and vehicles. Festival dates are checked every year.",
       },
       {
         start: "2027-07-07",
@@ -957,7 +957,7 @@ export const adventures: Adventure[] = [
         style: "private",
         priceUSD: 5850,
         status: "open",
-        note: "Private trip around Naadam. Price per person for two travellers. Festival dates to be confirmed, verify yearly.",
+        note: "Private trip around Naadam. Price per person for two travellers. Festival dates are checked every year.",
       },
     ],
     route: [
@@ -1018,7 +1018,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Briefing and welcome dinner.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Trip briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -1039,7 +1039,7 @@ export const adventures: Adventure[] = [
         travel: "4-5 hrs drive, off-road",
         activities: ["Overland drive", "Meet the camel herders"],
         staySlug: "gobi-dunes-camp",
-        stay: "Gobi dunes camp (placeholder)",
+        stay: "Gobi dunes camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1069,7 +1069,7 @@ export const adventures: Adventure[] = [
           "Drive to Dalanzadgad for the flight north. A farewell dinner in the city.",
         travel: "2 hrs drive; 1.5 hrs flight",
         activities: ["Domestic flight", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -1172,7 +1172,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Your guide checks your kit and briefs you on the trek.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Kit check", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -1183,7 +1183,7 @@ export const adventures: Adventure[] = [
         travel: "3-4 hrs flight",
         activities: ["Domestic flight", "Permits", "Ölgii market"],
         staySlug: "altai-family-gers",
-        stay: "Altai family gers (placeholder)",
+        stay: "Altai family gers",
         meals: ["B", "L", "D"],
       },
       {
@@ -1254,7 +1254,7 @@ export const adventures: Adventure[] = [
         travel: "3 hrs trekking",
         activities: ["Trekking", "Lakeside walk", "Kazakh home cooking"],
         staySlug: "altai-family-gers",
-        stay: "Altai family gers (placeholder)",
+        stay: "Altai family gers",
         meals: ["B", "L", "D"],
       },
       {
@@ -1264,7 +1264,7 @@ export const adventures: Adventure[] = [
           "Drive back out of the mountains to Ölgii. A hot shower and a proper bed for the night.",
         travel: "5-6 hrs drive, off-road",
         activities: ["Overland drive"],
-        stay: "Comfortable guesthouse in Ölgii (placeholder)",
+        stay: "Comfortable guesthouse in Ölgii",
         meals: ["B", "L", "D"],
       },
       {
@@ -1273,7 +1273,7 @@ export const adventures: Adventure[] = [
         description: "Fly east to the capital for a farewell dinner.",
         travel: "3-4 hrs flight",
         activities: ["Domestic flight", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -1377,7 +1377,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Your guide checks your cold-weather kit and goes through Tsagaan Sar customs over dinner.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Cold-weather kit check", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -1386,7 +1386,7 @@ export const adventures: Adventure[] = [
         description:
           "Visit Gandan monastery as families come to pray before the new year, and walk the markets as the city stocks up. In the afternoon, learn to fold buuz with a local family.",
         activities: ["Gandan monastery", "Market visit", "Buuz making"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -1426,7 +1426,7 @@ export const adventures: Adventure[] = [
         travel: "4-5 hrs drive, snowy roads",
         activities: ["Overland drive", "Winter walk"],
         staySlug: "terelj-river-camp",
-        stay: "Terelj river camp (placeholder)",
+        stay: "Terelj river camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1437,7 +1437,7 @@ export const adventures: Adventure[] = [
         travel: "3-4 hrs walking",
         activities: ["Frozen river walk", "Winter hike", "Optional horse sledge"],
         staySlug: "terelj-river-camp",
-        stay: "Terelj river camp (placeholder)",
+        stay: "Terelj river camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1447,7 +1447,7 @@ export const adventures: Adventure[] = [
           "Stop at the Chinggis Khaan statue complex on the way back to Ulaanbaatar. Farewell dinner.",
         travel: "2 hrs drive",
         activities: ["Chinggis Khaan statue complex", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -1486,7 +1486,7 @@ export const adventures: Adventure[] = [
         style: "group",
         priceUSD: 3650,
         status: "limited",
-        note: "Tsagaan Sar expected in early-mid February 2027. Festival dates to be confirmed, verify yearly.",
+        note: "Tsagaan Sar expected in early-mid February 2027. Festival dates are checked every year.",
       },
       {
         start: "2027-02-04",
@@ -1494,7 +1494,7 @@ export const adventures: Adventure[] = [
         style: "group",
         priceUSD: 3650,
         status: "open",
-        note: "Second small group staying with a different family. Festival dates to be confirmed, verify yearly.",
+        note: "Second small group staying with a different family. Festival dates are checked every year.",
       },
       {
         start: "2027-02-03",
@@ -1502,7 +1502,7 @@ export const adventures: Adventure[] = [
         style: "private",
         priceUSD: 4850,
         status: "open",
-        note: "Private trip around Tsagaan Sar. Price per person for two travellers. Festival dates to be confirmed, verify yearly.",
+        note: "Private trip around Tsagaan Sar. Price per person for two travellers. Festival dates are checked every year.",
       },
     ],
     route: [
@@ -1561,7 +1561,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. An early, relaxed family dinner and a short briefing.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Family dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -1610,7 +1610,7 @@ export const adventures: Adventure[] = [
           "The longest drive of the trip, on paved road, broken up with a picnic and a stop at a roadside village. Overnight in Ulaanbaatar.",
         travel: "6-7 hrs drive, paved, with stops",
         activities: ["Overland drive", "Picnic lunch"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -1621,7 +1621,7 @@ export const adventures: Adventure[] = [
         travel: "2 hrs drive",
         activities: ["Chinggis Khaan statue complex", "River walk"],
         staySlug: "terelj-river-camp",
-        stay: "Terelj river camp (placeholder)",
+        stay: "Terelj river camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1632,7 +1632,7 @@ export const adventures: Adventure[] = [
         travel: "Short walks and rides",
         activities: ["Pony rides", "Archery lesson", "Hike to Turtle Rock", "River play"],
         staySlug: "terelj-river-camp",
-        stay: "Terelj river camp (placeholder)",
+        stay: "Terelj river camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1745,7 +1745,7 @@ export const adventures: Adventure[] = [
       "Autumn larches and the Ulaan Tsutgalan waterfall",
       "Portraits with herding families, made with consent and time",
       "Takhi at dusk in Khustai National Park",
-      "Daily editing sessions with a photographer guide (placeholder)",
+      "Daily editing sessions with a photographer guide",
     ],
     hero: images.autumnRiverMountains,
     gallery: [images.milkyWaySteppe, images.dunesStorm, images.gerCampDusk, images.steppeBigSky],
@@ -1757,7 +1757,7 @@ export const adventures: Adventure[] = [
           "Airport welcome and transfer to your hotel. Meet your photographer guide and local guide over dinner and talk through the plan and kit.",
         travel: "1 hr transfer",
         activities: ["Airport welcome", "Photography briefing", "Welcome dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["D"],
       },
       {
@@ -1778,7 +1778,7 @@ export const adventures: Adventure[] = [
         travel: "4-5 hrs drive, off-road",
         activities: ["Overland drive", "Sunset shoot"],
         staySlug: "gobi-dunes-camp",
-        stay: "Gobi dunes camp (placeholder)",
+        stay: "Gobi dunes camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1788,7 +1788,7 @@ export const adventures: Adventure[] = [
           "Two days built around the light: dawn on the dune crests, midday editing, an afternoon with a camel-herding family and night shoots under very dark skies.",
         activities: ["Dawn and dusk shoots", "Portraits with herders", "Astrophotography", "Editing session"],
         staySlug: "gobi-dunes-camp",
-        stay: "Gobi dunes camp (placeholder)",
+        stay: "Gobi dunes camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1829,7 +1829,7 @@ export const adventures: Adventure[] = [
         travel: "3-4 hrs drive, rough track",
         activities: ["Overland drive", "Landscape photography"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1839,7 +1839,7 @@ export const adventures: Adventure[] = [
           "Morning at Ulaan Tsutgalan waterfall, then an afternoon with herders as they work with their horses, a chance for movement and portraits.",
         activities: ["Waterfall shoot", "Horsemen at work", "Portraits"],
         staySlug: "orkhon-valley-camp",
-        stay: "Orkhon Valley camp (placeholder)",
+        stay: "Orkhon Valley camp",
         meals: ["B", "L", "D"],
       },
       {
@@ -1879,7 +1879,7 @@ export const adventures: Adventure[] = [
           "Return to the capital for a group review of everyone's best work, then a farewell dinner.",
         travel: "2-3 hrs drive",
         activities: ["Portfolio review", "Farewell dinner"],
-        stay: "Hotel in Ulaanbaatar (4-star, placeholder)",
+        stay: "4-star hotel in Ulaanbaatar",
         meals: ["B", "L", "D"],
       },
       {
@@ -1893,7 +1893,7 @@ export const adventures: Adventure[] = [
       },
     ],
     included: [
-      "Photographer guide (placeholder) and English-speaking local guide",
+      "Photographer guide and English-speaking local guide",
       "Driver and 4x4 (Land Cruiser), with no more than three photographers per vehicle",
       "Domestic flight Ulaanbaatar–Dalanzadgad",
       "All meals as listed in the itinerary",

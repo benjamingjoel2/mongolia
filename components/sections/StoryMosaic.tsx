@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Img } from "@/lib/images";
@@ -8,7 +8,8 @@ import { cn } from "@/lib/cn";
 import { Photo } from "@/components/ui/Photo";
 import { Emphasis } from "@/components/ui/DisplayHeading";
 import { ArrowLink } from "@/components/ui/ArrowLink";
-import { Price } from "@/components/ui/Price";
+import { FromPrice } from "@/components/ui/Price";
+import { useT } from "@/lib/i18n/client";
 import { Close } from "@/components/ui/icons";
 
 export interface StoryData {
@@ -140,6 +141,7 @@ function Tile({
   delay: number;
   onOpen?: (el: HTMLElement) => void;
 }) {
+  const t = useT();
   const inner = (
     <>
       <Photo
@@ -179,9 +181,7 @@ function Tile({
           <p className="text-micro mt-2 flex flex-wrap gap-x-3 gap-y-1 text-offwhite/90 md:mt-4 md:pl-[1.6em]">
             {item.meta && <span className="hidden md:inline">{item.meta}</span>}
             {item.priceFromUSD && (
-              <span>
-                From <Price usd={item.priceFromUSD} /> pp
-              </span>
+              <FromPrice usd={item.priceFromUSD} short />
             )}
           </p>
         )}
@@ -211,7 +211,7 @@ function Tile({
           className={cn(cls, "h-full")}
           onClick={(e) => onOpen?.(e.currentTarget)}
           aria-haspopup="dialog"
-          aria-label={`${item.title}: open story`}
+          aria-label={t("{title}: open story", { title: item.title })}
         >
           {inner}
         </button>
@@ -222,6 +222,7 @@ function Tile({
 
 function StoryOverlay({ item, onClose, onNavigate }: { item: MosaicItem; onClose: () => void; onNavigate: () => void }) {
   const story = item.story!;
+  const t = useT();
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -264,7 +265,7 @@ function StoryOverlay({ item, onClose, onNavigate }: { item: MosaicItem; onClose
         ref={closeRef}
         type="button"
         onClick={onClose}
-        aria-label="Close story"
+        aria-label={t("Close story")}
         className="fixed right-[15px] top-[15px] z-10 grid size-11 place-items-center rounded-blob bg-offwhite text-charcoal transition-transform duration-[var(--dur)] ease-ref hover:rotate-90 md:right-7 md:top-6 md:size-14"
       >
         <Close className="size-5 md:size-6" />
@@ -304,7 +305,7 @@ function StoryOverlay({ item, onClose, onNavigate }: { item: MosaicItem; onClose
               ))}
               {story.priceFromUSD && (
                 <li className="rounded-full bg-gobi px-4 py-2 text-[14px] font-medium text-charcoal md:text-[16px]">
-                  From <Price usd={story.priceFromUSD} /> per person
+                  <FromPrice usd={story.priceFromUSD} />
                 </li>
               )}
             </ul>
