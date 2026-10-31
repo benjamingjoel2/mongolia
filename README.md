@@ -54,3 +54,21 @@ English, French, German and Spanish. English stays at the original URLs (`proxy.
 
 Hosted on Vercel (project `steppe-and-sky`). Production: <https://steppeandsky.tourground.com>.
 Set `NEXT_PUBLIC_SITE_URL` to the production domain (used for canonical URLs, sitemap and Open Graph).
+
+## Cloudflare Workers (OpenNext)
+
+The site can also run on Cloudflare Workers through the [OpenNext adapter](https://opennext.js.org/cloudflare) (`@opennextjs/cloudflare`). This is additive: Vercel still runs `npm run build` and ignores the Cloudflare files.
+
+```bash
+npm run cf-build   # next build, OpenNext bundle, prerendered pages copied into the assets
+npx wrangler dev   # serve the Worker locally on http://localhost:8787
+npm run preview    # cf-build, then OpenNext's local preview
+npm run deploy     # cf-build, then deploy the Worker (needs a Cloudflare login; not done yet)
+```
+
+- `wrangler.jsonc`: Worker `mongolia`, `nodejs_compat`, static assets from `.open-next/assets`. `enable_nodejs_global_timers` gives Next.js Cache Components the Node-style `setTimeout()` it expects. No Images binding: `next/image` uses the Unsplash loader.
+- `open-next.config.ts`: prerendered pages are served read-only from Workers static assets (`static-assets-incremental-cache`). The site has no ISR, and the journal reads `content/` with `node:fs`, which is not available at request time on Workers. That is why `cf-build` also runs `opennextjs-cloudflare populateCache local`.
+- `proxy.ts` runs as OpenNext's Node.js middleware, which OpenNext still marks as experimental. English URLs, `/en` redirects and the planner modal work.
+- `cloudflare/_headers` is copied into the assets on `cf-build`: `/_next/static/*` gets a year-long immutable cache. Redirects come from `next.config.ts`, which OpenNext applies.
+- Known gap: the share images (`/[locale]/opengraph-image/default`) return 500 on Workers. They are generated on demand under Cache Components, and the Workers build of `next/og` loads its font and wasm asynchronously, which Next rejects during on-demand static generation. They work on Vercel.
+- `NEXT_PUBLIC_*` values are inlined at build time, so set them in the build environment.
