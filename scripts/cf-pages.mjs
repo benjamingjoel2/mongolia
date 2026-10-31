@@ -1,7 +1,7 @@
 // Builds the site for Cloudflare Pages (Git-connected, "advanced mode").
 // 1. `npm run cf-build` produces the OpenNext Worker and its static assets.
 // 2. `wrangler deploy --dry-run` bundles the Worker into one file (nothing is uploaded).
-// 3. The assets and the bundled Worker (as _worker.js) are assembled in dist-pages/,
+// 3. The assets and the bundled Worker (as _worker.js) are assembled in dist-pages/ (Worker in dist-pages/_worker.js/),
 //    which is the Pages output directory. Static files under /_next/static are served
 //    by Pages directly; every other request goes through the Worker.
 import { execSync } from "node:child_process";
@@ -22,7 +22,14 @@ const worker = fs
   .replace(/(\bfrom\s*|\bimport\s*\(?\s*)(["'])([a-z_/]+)\2/g, (all, pre, q, mod) =>
     builtins.has(mod) ? `${pre}${q}node:${mod}${q}` : all,
   );
-fs.writeFileSync("dist-pages/_worker.js", worker);
+// Directory form (_worker.js/index.js) so modules the bundle imports (fonts, wasm) sit
+// next to it; Pages never serves the _worker.js directory publicly.
+fs.mkdirSync("dist-pages/_worker.js");
+fs.writeFileSync("dist-pages/_worker.js/index.js", worker);
+for (const f of fs.readdirSync(".cf-bundle")) {
+  if (f === "worker.js" || f.endsWith(".map") || f === "README.md") continue;
+  fs.cpSync(`.cf-bundle/${f}`, `dist-pages/_worker.js/${f}`, { recursive: true });
+}
 fs.writeFileSync(
   "dist-pages/_routes.json",
   JSON.stringify({ version: 1, include: ["/*"], exclude: ["/_next/static/*"] }),
