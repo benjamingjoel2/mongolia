@@ -139,7 +139,7 @@ export const legalDocs: LegalDoc[] = [
         "If we later ask for your consent to optional cookies, you will be able to withdraw it at any time from the same place, and it will be as easy as giving it.",
       ] },
       { h: "Third-party content", p: [
-        "Our typefaces are served from this website. Photographs are loaded from Unsplash's image servers (images.unsplash.com), which receive your IP address and browser details in order to deliver the images but set no cookies on this site. Our hosting provider (Vercel) may record standard technical information in its server logs for security.",
+        "Our typefaces are served from this website. Photographs are loaded from our image delivery provider, which receives your IP address and browser details in order to deliver the images but sets no cookies on this site. Our hosting provider (Vercel) may record standard technical information in its server logs for security.",
       ] },
       { h: "Changes", p: [
         "We will update this page if the way the website stores information changes. The date at the top shows when it last changed.",
