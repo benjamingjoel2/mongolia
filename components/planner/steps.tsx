@@ -2,6 +2,10 @@
 
 import type { Activity, ComfortLevel, MonthNumber } from "@/data/types";
 import { activityLabels, comfortLabels, monthNames } from "@/data/taxonomy";
+import { site } from "@/config/site";
+import { Emphasis } from "@/components/ui/DisplayHeading";
+import { useLocale } from "@/lib/i18n/client";
+import { monthShortName } from "@/lib/i18n/config";
 import { images, type Img } from "@/lib/images";
 import {
   budgetChoices,
@@ -16,6 +20,8 @@ import { formatPrice } from "@/lib/currency";
 import { useCurrency } from "@/components/layout/CurrencyStore";
 import { cn } from "@/lib/cn";
 import { ImageCard, OptionCard, Question, Stepper, TextField, FieldError } from "./fields";
+import { useT } from "@/lib/i18n/client";
+import { msg } from "@/lib/i18n/core";
 
 export interface PlannerValues {
   when: { month: number | ""; flexible: "yes" | "no" | ""; days: number; festival: string };
@@ -71,54 +77,56 @@ type StepProps<K extends keyof PlannerValues> = {
 const toggle = (list: string[], v: string) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
 
 const seasonHint = (rating: number) =>
-  rating >= 5 ? "Peak season" : rating === 4 ? "Great" : rating === 3 ? "Shoulder" : rating === 2 ? "Quiet, cold" : "Deep winter";
+  rating >= 5 ? msg("Peak season") : rating === 4 ? msg("Great") : rating === 3 ? msg("Shoulder") : rating === 2 ? msg("Quiet, cold") : msg("Deep winter");
 
 /* ---------- 1. When ---------- */
 
 export function StepWhen({ values, set, errors, monthHints }: StepProps<"when"> & { monthHints: MonthHint[] }) {
+  const t = useT();
+  const locale = useLocale();
   return (
     <div className="flex flex-col gap-12 md:gap-16">
-      <Question title="Which month would you like to travel?" hint="June to September is the main season. Winter trips suit experienced travellers." error={errors.month} errorId="err-month">
-        <div role="radiogroup" aria-label="Travel month" className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
+      <Question title={t("Which month would you like to travel?")} hint={t("June to September is the main season. Winter trips suit experienced travellers.")} error={errors.month} errorId="err-month">
+        <div role="radiogroup" aria-label={t("Travel month")} className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
           {(Object.keys(monthNames).map(Number) as MonthNumber[]).map((m) => (
             <OptionCard
               key={m}
               name="month"
               selected={values.month === m}
               onSelect={() => set({ month: m })}
-              title={monthNames[m].slice(0, 3)}
-              hint={seasonHint(monthHints.find((h) => h.month === m)?.rating ?? 3)}
+              title={monthShortName(m, locale)}
+              hint={t(seasonHint(monthHints.find((h) => h.month === m)?.rating ?? 3))}
             />
           ))}
         </div>
       </Question>
 
-      <Question title="Are your dates flexible?" error={errors.flexible} errorId="err-flexible">
-        <div role="radiogroup" aria-label="Flexible dates" className="grid max-w-xl grid-cols-2 gap-2">
-          <OptionCard name="flexible" selected={values.flexible === "yes"} onSelect={() => set({ flexible: "yes" })} title="Yes, flexible" hint="We'll suggest the best window" />
-          <OptionCard name="flexible" selected={values.flexible === "no"} onSelect={() => set({ flexible: "no" })} title="No, fixed dates" hint="Tell us more in the notes" />
+      <Question title={t("Are your dates flexible?")} error={errors.flexible} errorId="err-flexible">
+        <div role="radiogroup" aria-label={t("Flexible dates")} className="grid max-w-xl grid-cols-2 gap-2">
+          <OptionCard name="flexible" selected={values.flexible === "yes"} onSelect={() => set({ flexible: "yes" })} title={t("Yes, flexible")} hint={t("We'll suggest the best window")} />
+          <OptionCard name="flexible" selected={values.flexible === "no"} onSelect={() => set({ flexible: "no" })} title={t("No, fixed dates")} hint={t("Tell us more in the notes")} />
         </div>
       </Question>
 
-      <Question as="div" title="How many days in Mongolia?" hint="Between 5 and 30 days. Most first trips are 10 to 14." error={errors.days} errorId="err-days">
+      <Question as="div" title={t("How many days in Mongolia?")} hint={t("Between 5 and 30 days. Most first trips are 10 to 14.")} error={errors.days} errorId="err-days">
         <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-10">
-          <Stepper label="Days" value={values.days} min={5} max={30} onChange={(days) => set({ days })} suffix="days" />
+          <Stepper label={t("Days")} decLabel={t("Fewer days")} incLabel={t("More days")} value={values.days} min={5} max={30} onChange={(days) => set({ days })} suffix={t("days")} />
           <input
             type="range"
             min={5}
             max={30}
             value={values.days}
             onChange={(e) => set({ days: Number(e.target.value) })}
-            aria-label="Number of days"
+            aria-label={t("Number of days")}
             className="w-full max-w-md accent-felt"
           />
         </div>
       </Question>
 
-      <Question title="Would you like to travel around a festival?" hint="Festival dates move each year; we confirm them when we plan." error={errors.festival} errorId="err-festival">
-        <div role="radiogroup" aria-label="Festival" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <Question title={t("Would you like to travel around a festival?")} hint={t("Festival dates move each year; we confirm them when we plan.")} error={errors.festival} errorId="err-festival">
+        <div role="radiogroup" aria-label={t("Festival")} className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {festivalChoices.map((f) => (
-            <OptionCard key={f.value} name="festival" selected={values.festival === f.value} onSelect={() => set({ festival: f.value })} title={f.label} hint={f.hint} />
+            <OptionCard key={f.value} name="festival" selected={values.festival === f.value} onSelect={() => set({ festival: f.value })} title={t(f.label)} hint={t(f.hint)} />
           ))}
         </div>
       </Question>
@@ -142,9 +150,10 @@ const activityImages: Record<Activity, Img> = {
 };
 
 export function StepWhere({ values, set, errors, regions }: StepProps<"where"> & { regions: RegionOption[] }) {
+  const t = useT();
   return (
     <div className="flex flex-col gap-12 md:gap-16">
-      <Question title="Where would you like to go?" hint="Choose as many as you like." error={errors.regions} errorId="err-regions">
+      <Question title={t("Where would you like to go?")} hint={t("Choose as many as you like.")} error={errors.regions} errorId="err-regions">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {regions.map((r) => (
             <ImageCard
@@ -159,12 +168,12 @@ export function StepWhere({ values, set, errors, regions }: StepProps<"where"> &
         </div>
       </Question>
 
-      <Question title="What would you love to do?" hint="Pick the experiences that excite you most.">
+      <Question title={t("What would you love to do?")} hint={t("Pick the experiences that excite you most.")}>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {(Object.keys(activityLabels) as Activity[]).map((a) => (
             <ImageCard
               key={a}
-              title={activityLabels[a]}
+              title={t(activityLabels[a])}
               image={activityImages[a]}
               selected={values.activities.includes(a)}
               onToggle={() => set({ activities: toggle(values.activities, a) })}
@@ -184,10 +193,10 @@ export function StepWhere({ values, set, errors, regions }: StepProps<"where"> &
       >
         <span>
           <span className="block text-[22px] font-medium leading-tight tracking-[-0.03em] md:text-[28px]">
-            <em className="italic">Help me</em> choose
+            <Emphasis text={t("*Help me* choose")} />
           </span>
           <span className={cn("mt-2 block text-[15px] md:text-[16px]", values.helpMeChoose ? "text-charcoal/75" : "text-offwhite/65")}>
-            Not sure yet? Your specialist will suggest regions and experiences from your answers.
+            {t("Not sure yet? Your specialist will suggest regions and experiences from your answers.")}
           </span>
         </span>
         <span aria-hidden className={cn("grid size-8 shrink-0 place-items-center rounded-full border-2", values.helpMeChoose ? "border-charcoal bg-charcoal text-gobi" : "border-offwhite/60")}>
@@ -201,33 +210,34 @@ export function StepWhere({ values, set, errors, regions }: StepProps<"where"> &
 /* ---------- 3. Style ---------- */
 
 export function StepStyle({ values, set, errors }: StepProps<"style">) {
+  const t = useT();
   return (
     <div className="flex flex-col gap-12 md:gap-16">
-      <Question title="Small group or private?" error={errors.style} errorId="err-style">
-        <div role="radiogroup" aria-label="Trip style" className="grid max-w-3xl grid-cols-1 gap-2 sm:grid-cols-2">
-          <OptionCard name="style" selected={values.style === "group"} onSelect={() => set({ style: "group" })} title="Small group" hint="Set departures, up to 10 travellers, great value" />
-          <OptionCard name="style" selected={values.style === "private"} onSelect={() => set({ style: "private" })} title="Private" hint="Your own guide, driver and dates, built around you" />
+      <Question title={t("Small group or private?")} error={errors.style} errorId="err-style">
+        <div role="radiogroup" aria-label={t("Trip style")} className="grid max-w-3xl grid-cols-1 gap-2 sm:grid-cols-2">
+          <OptionCard name="style" selected={values.style === "group"} onSelect={() => set({ style: "group" })} title={t("Small group")} hint={t("Set departures, up to 10 travellers, great value")} />
+          <OptionCard name="style" selected={values.style === "private"} onSelect={() => set({ style: "private" })} title={t("Private")} hint={t("Your own guide, driver and dates, built around you")} />
         </div>
       </Question>
 
-      <Question title="How comfortable would you like your camps?" error={errors.comfort} errorId="err-comfort">
-        <div role="radiogroup" aria-label="Comfort level" className="grid grid-cols-1 gap-2 md:grid-cols-3">
+      <Question title={t("How comfortable would you like your camps?")} error={errors.comfort} errorId="err-comfort">
+        <div role="radiogroup" aria-label={t("Comfort level")} className="grid grid-cols-1 gap-2 md:grid-cols-3">
           {(Object.keys(comfortLabels) as ComfortLevel[]).map((c) => (
-            <OptionCard key={c} name="comfort" selected={values.comfort === c} onSelect={() => set({ comfort: c })} title={comfortLabels[c].label} hint={comfortLabels[c].description} />
+            <OptionCard key={c} name="comfort" selected={values.comfort === c} onSelect={() => set({ comfort: c })} title={t(comfortLabels[c].label)} hint={t(comfortLabels[c].description)} />
           ))}
         </div>
       </Question>
 
-      <Question title="How much riding experience do you have?" hint="Mongolian horses are small, sure-footed and spirited." error={errors.riding} errorId="err-riding">
-        <div role="radiogroup" aria-label="Riding experience" className="grid grid-cols-1 gap-2 md:grid-cols-3">
+      <Question title={t("How much riding experience do you have?")} hint={t("Mongolian horses are small, sure-footed and spirited.")} error={errors.riding} errorId="err-riding">
+        <div role="radiogroup" aria-label={t("Riding experience")} className="grid grid-cols-1 gap-2 md:grid-cols-3">
           {ridingChoices.map((r) => (
-            <OptionCard key={r.value} name="riding" selected={values.riding === r.value} onSelect={() => set({ riding: r.value })} title={r.label} hint={r.hint} />
+            <OptionCard key={r.value} name="riding" selected={values.riding === r.value} onSelect={() => set({ riding: r.value })} title={t(r.label)} hint={t(r.hint)} />
           ))}
         </div>
       </Question>
 
-      <Question title="And your fitness level?" error={errors.fitness} errorId="err-fitness">
-        <div role="radiogroup" aria-label="Fitness level" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <Question title={t("And your fitness level?")} error={errors.fitness} errorId="err-fitness">
+        <div role="radiogroup" aria-label={t("Fitness level")} className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {fitnessChoices.map((f) => (
             <OptionCard key={f.value} name="fitness" selected={values.fitness === f.value} onSelect={() => set({ fitness: f.value })} title={f.label} hint={f.hint} />
           ))}
@@ -241,11 +251,12 @@ export function StepStyle({ values, set, errors }: StepProps<"style">) {
 
 export function StepWho({ values, set, errors }: StepProps<"who">) {
   const code = useCurrency();
+  const t = useT();
   const budgetLabel = (b: (typeof budgetChoices)[number]) => {
-    if (b.value === "unsure") return "Not sure yet";
-    if (b.min === 0) return `Under ${formatPrice(b.max!, code)}`;
-    if (b.max === null) return `${formatPrice(b.min!, code)} or more`;
-    return `${formatPrice(b.min!, code)} to ${formatPrice(b.max, code)}`;
+    if (b.value === "unsure") return t("Not sure yet");
+    if (b.min === 0) return t("Under {price}", { price: formatPrice(b.max!, code) });
+    if (b.max === null) return t("{price} or more", { price: formatPrice(b.min!, code) });
+    return t("{min} to {max}", { min: formatPrice(b.min!, code), max: formatPrice(b.max, code) });
   };
 
   const setChildren = (n: number) => {
@@ -257,21 +268,21 @@ export function StepWho({ values, set, errors }: StepProps<"who">) {
   return (
     <div className="flex flex-col gap-12 md:gap-16">
       <div className="grid gap-10 md:grid-cols-2">
-        <Question as="div" title="Adults" error={errors.adults} errorId="err-adults">
-          <Stepper label="Adults" value={values.adults} min={1} max={20} onChange={(adults) => set({ adults })} />
+        <Question as="div" title={t("Adults")} error={errors.adults} errorId="err-adults">
+          <Stepper label={t("Adults")} decLabel={t("Fewer adults")} incLabel={t("More adults")} value={values.adults} min={1} max={20} onChange={(adults) => set({ adults })} />
         </Question>
-        <Question as="div" title="Children" hint="Under 18 on the day you travel." error={errors.children} errorId="err-children">
-          <Stepper label="Children" value={values.children} min={0} max={10} onChange={setChildren} />
+        <Question as="div" title={t("Children")} hint={t("Under 18 on the day you travel.")} error={errors.children} errorId="err-children">
+          <Stepper label={t("Children")} decLabel={t("Fewer children")} incLabel={t("More children")} value={values.children} min={0} max={10} onChange={setChildren} />
         </Question>
       </div>
 
       {values.children > 0 && (
         <div>
-          <p className="mb-4 text-[17px] md:text-[19px]">Children&apos;s ages</p>
+          <p className="mb-4 text-[17px] md:text-[19px]">{t("Children's ages")}</p>
           <div className="flex flex-wrap gap-3">
             {values.childAges.map((age, i) => (
               <label key={i} className="flex flex-col gap-1 text-[13px] text-offwhite/70">
-                Child {i + 1}
+                {t("Child {n}", { n: i + 1 })}
                 <select
                   value={age}
                   onChange={(e) => {
@@ -281,10 +292,10 @@ export function StepWho({ values, set, errors }: StepProps<"who">) {
                   }}
                   className="h-12 min-w-[6.5rem] rounded-full border border-offwhite/35 bg-charcoal px-4 text-[17px] text-offwhite focus:border-gobi"
                 >
-                  <option value="">Age</option>
+                  <option value="">{t("Age")}</option>
                   {Array.from({ length: 18 }, (_, a) => (
                     <option key={a} value={a}>
-                      {a === 0 ? "Under 1" : a}
+                      {a === 0 ? t("Under 1") : a}
                     </option>
                   ))}
                 </select>
@@ -295,7 +306,7 @@ export function StepWho({ values, set, errors }: StepProps<"who">) {
         </div>
       )}
 
-      <Question title="Any dietary needs?" hint="Mongolian food is meat and dairy rich. With notice, every diet can be catered for.">
+      <Question title={t("Any dietary needs?")} hint={t("Mongolian food is meat and dairy rich. With notice, every diet can be catered for.")}>
         <div className="flex flex-wrap gap-2">
           {dietaryChoices.map((d) => {
             const on = values.dietary.includes(d);
@@ -310,22 +321,22 @@ export function StepWho({ values, set, errors }: StepProps<"who">) {
                   on ? "border-offwhite bg-offwhite text-charcoal" : "border-offwhite/30 hover:border-offwhite",
                 )}
               >
-                {d}
+                {t(d)}
               </button>
             );
           })}
         </div>
         <TextField
           className="mt-6 max-w-2xl"
-          label="Anything else we should know? (allergies, intolerances)"
+          label={t("Anything else we should know? (allergies, intolerances)")}
           value={values.dietaryNotes}
           onChange={(e) => set({ dietaryNotes: e.target.value })}
-          placeholder="Optional"
+          placeholder={t("Optional")}
         />
       </Question>
 
-      <Question title="Budget per person" hint={`Excluding international flights. Shown in ${code}.`} error={errors.budget} errorId="err-budget">
-        <div role="radiogroup" aria-label="Budget per person" className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+      <Question title={t("Budget per person")} hint={t("Excluding international flights. Shown in {code}.", { code })} error={errors.budget} errorId="err-budget">
+        <div role="radiogroup" aria-label={t("Budget per person")} className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
           {budgetChoices.map((b) => (
             <OptionCard key={b.value} name="budget" selected={values.budget === b.value} onSelect={() => set({ budget: b.value })} title={budgetLabel(b)} />
           ))}
@@ -338,18 +349,19 @@ export function StepWho({ values, set, errors }: StepProps<"who">) {
 /* ---------- 5. Contact ---------- */
 
 export function StepContact({ values, set, errors }: StepProps<"contact">) {
+  const t = useT();
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <div className="grid gap-8 md:grid-cols-2 md:gap-10">
-        <TextField label="Your name" name="name" autoComplete="name" value={values.name} onChange={(e) => set({ name: e.target.value })} error={errors.name} />
-        <TextField label="Email" name="email" type="email" autoComplete="email" inputMode="email" value={values.email} onChange={(e) => set({ email: e.target.value })} error={errors.email} />
+        <TextField label={t("Your name")} name="name" autoComplete="name" value={values.name} onChange={(e) => set({ name: e.target.value })} error={errors.name} />
+        <TextField label={t("Email")} name="email" type="email" autoComplete="email" inputMode="email" value={values.email} onChange={(e) => set({ email: e.target.value })} error={errors.email} />
       </div>
 
       <div>
-        <span className="block text-[14px] text-offwhite/70 md:text-[15px]">Phone, with country code</span>
+        <span className="block text-[14px] text-offwhite/70 md:text-[15px]">{t("Phone, with country code")}</span>
         <div className="mt-2 flex gap-3">
           <label className="sr-only" htmlFor="dialCode">
-            Country code
+            {t("Country code")}
           </label>
           <select
             id="dialCode"
@@ -359,14 +371,14 @@ export function StepContact({ values, set, errors }: StepProps<"contact">) {
           >
             {dialCodes.map((d) => (
               <option key={d.code} value={d.code}>
-                {d.label}
+                {t(d.label)}
               </option>
             ))}
           </select>
           <TextField
             className="-mt-2 grow"
             label=""
-            aria-label="Phone number"
+            aria-label={t("Phone number")}
             name="phone"
             type="tel"
             autoComplete="tel-national"
@@ -374,12 +386,12 @@ export function StepContact({ values, set, errors }: StepProps<"contact">) {
             value={values.phone}
             onChange={(e) => set({ phone: e.target.value })}
             error={errors.phone}
-            placeholder="Number"
+            placeholder={t("Number")}
           />
         </div>
       </div>
 
-      <Question title="How should we reach you?" hint="Choose all that suit you." error={errors.contactMethods} errorId="err-contactMethods">
+      <Question title={t("How should we reach you?")} hint={t("Choose all that suit you.")} error={errors.contactMethods} errorId="err-contactMethods">
         <div className="grid max-w-3xl grid-cols-1 gap-2 sm:grid-cols-3">
           {contactChoices.map((m) => (
             <OptionCard
@@ -387,7 +399,7 @@ export function StepContact({ values, set, errors }: StepProps<"contact">) {
               multi
               selected={values.contactMethods.includes(m)}
               onSelect={() => set({ contactMethods: toggle(values.contactMethods, m) })}
-              title={m}
+              title={t(m)}
             />
           ))}
         </div>
@@ -395,10 +407,10 @@ export function StepContact({ values, set, errors }: StepProps<"contact">) {
 
       <TextField
         textarea
-        label="Notes for your specialist"
+        label={t("Notes for your specialist")}
         value={values.notes}
         onChange={(e) => set({ notes: e.target.value })}
-        placeholder="Dream moments, fixed dates, celebrations, accessibility needs…"
+        placeholder={t("Dream moments, fixed dates, celebrations, accessibility needs…")}
       />
 
       <div>
@@ -412,8 +424,7 @@ export function StepContact({ values, set, errors }: StepProps<"contact">) {
             className="mt-0.5 size-6 shrink-0 accent-felt"
           />
           <span>
-            I agree that Steppe &amp; Sky may use these details to reply to my enquiry and plan my trip. We never share
-            your details for marketing.
+            {t("I agree that {name} may use these details to reply to my enquiry and plan my trip. We never share your details for marketing.", { name: site.name })}
           </span>
         </label>
         <FieldError id="err-consent" message={errors.consent} />

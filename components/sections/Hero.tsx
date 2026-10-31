@@ -8,6 +8,7 @@ import { Photo } from "@/components/ui/Photo";
 import { Emphasis } from "@/components/ui/DisplayHeading";
 import { BlobIconButton } from "@/components/ui/BlobButton";
 import { ArrowDown } from "@/components/ui/icons";
+import { useT } from "@/lib/i18n/client";
 
 type Props = {
   image: Img;
@@ -46,6 +47,7 @@ export function Hero({
 }: Props) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const t = useT();
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const planeY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "18%"]);
@@ -147,7 +149,7 @@ export function Hero({
         >
           <div {...enter(4)}>
           <BlobIconButton
-            label="Scroll to the next section"
+            label={t("Scroll to the next section")}
             onClick={() => document.getElementById(scrollTo)?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" })}
           >
             <ArrowDown className="size-6 animate-[nudge_2.4s_ease-in-out_infinite]" />

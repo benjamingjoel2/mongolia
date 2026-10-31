@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { cn } from "@/lib/cn";
 
 type Variant = "felt" | "charcoal" | "offwhite" | "gobi";

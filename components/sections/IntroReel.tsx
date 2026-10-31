@@ -6,6 +6,7 @@ import { intro } from "@/config/site";
 import { images, type Img } from "@/lib/images";
 import { Photo } from "@/components/ui/Photo";
 import { InlineScript } from "@/components/ui/InlineScript";
+import { useT } from "@/lib/i18n/client";
 
 const KEY = "sns.introSeen";
 const reel: Img[] = [images.steppeLoneGer, images.dunesStorm, images.altaiPinkPeaks, images.tentMilkyWay];
@@ -42,6 +43,7 @@ export function IntroReel() {
   const [index, setIndex] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const isDone = useIntroDone();
+  const t = useT();
   const show = visible && !isDone;
 
   const close = useCallback(() => {
@@ -88,7 +90,7 @@ export function IntroReel() {
             data-theme="dark"
             role="button"
             tabIndex={0}
-            aria-label="Intro film. Press to skip"
+            aria-label={t("Intro film. Press to skip")}
             onClick={close}
             className="fixed inset-0 z-[90] cursor-pointer overflow-hidden bg-charcoal text-offwhite outline-none"
             exit={{ opacity: 0 }}
@@ -112,7 +114,7 @@ export function IntroReel() {
             )}
             <div aria-hidden className="absolute inset-0 bg-charcoal/45" />
             <div className="absolute inset-x-0 top-[47%] flex flex-col items-center gap-3">
-              <span className="text-[16px] font-medium tracking-[-0.03em] md:text-[18px]">Click to skip</span>
+              <span className="text-[16px] font-medium tracking-[-0.03em] md:text-[18px]">{t("Click to skip")}</span>
               <span className="relative block h-[2px] w-[35px] overflow-hidden bg-offwhite/30">
                 <motion.span
                   className="absolute inset-y-0 left-0 bg-offwhite"
@@ -123,7 +125,7 @@ export function IntroReel() {
               </span>
             </div>
             <p className="absolute bottom-6 left-[15px] max-w-[60vw] text-[12px] tracking-[-0.01em] text-offwhite/70 md:left-7 md:text-[13px]">
-              Nothing between you and the sky.
+              {t("Nothing between you and the sky.")}
             </p>
           </motion.div>
         )}

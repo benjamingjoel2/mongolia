@@ -5,15 +5,17 @@ import type { Img } from "@/lib/images";
 import { cn } from "@/lib/cn";
 import { Photo } from "@/components/ui/Photo";
 import { Check } from "@/components/ui/icons";
+import { useT } from "@/lib/i18n/client";
 
 export function FieldError({ id, message }: { id?: string; message?: string }) {
+  const t = useT();
   if (!message) return null;
   return (
     <p id={id} role="alert" className="mt-3 flex items-center gap-2 text-[15px] text-gobi">
       <span aria-hidden className="grid size-5 place-items-center rounded-full bg-gobi text-[12px] font-bold text-charcoal">
         !
       </span>
-      {message}
+      {t(message)}
     </p>
   );
 }
@@ -164,6 +166,8 @@ export function ImageCard({
 
 export function Stepper({
   label,
+  decLabel,
+  incLabel,
   value,
   min,
   max,
@@ -171,6 +175,8 @@ export function Stepper({
   suffix,
 }: {
   label: string;
+  decLabel: string;
+  incLabel: string;
   value: number;
   min: number;
   max: number;
@@ -182,7 +188,7 @@ export function Stepper({
     <div className="flex items-center gap-4">
       <button
         type="button"
-        aria-label={`Fewer ${label.toLowerCase()}`}
+        aria-label={decLabel}
         disabled={value <= min}
         onClick={() => onChange(Math.max(min, value - 1))}
         className="grid size-12 place-items-center rounded-full border border-offwhite/40 text-[22px] transition-colors hover:bg-offwhite hover:text-charcoal disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-offwhite"
@@ -194,7 +200,7 @@ export function Stepper({
       </output>
       <button
         type="button"
-        aria-label={`More ${label.toLowerCase()}`}
+        aria-label={incLabel}
         disabled={value >= max}
         onClick={() => onChange(Math.min(max, value + 1))}
         className="grid size-12 place-items-center rounded-full border border-offwhite/40 text-[22px] transition-colors hover:bg-offwhite hover:text-charcoal disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-offwhite"

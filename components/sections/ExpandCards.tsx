@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 import { Photo } from "@/components/ui/Photo";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Plus } from "@/components/ui/icons";
+import { useT } from "@/lib/i18n/client";
 
 export interface ExpandCard {
   id: string;
@@ -54,6 +55,7 @@ export function ExpandCards({ cards, layout = "podium" }: { cards: ExpandCard[];
 function Card({ card }: { card: ExpandCard }) {
   const [open, setOpen] = useState(false);
   const id = useId();
+  const t = useT();
   return (
     <div className="group relative aspect-[4/5] overflow-hidden bg-charcoal text-offwhite md:aspect-[3/4.3]">
       <Photo
@@ -89,7 +91,7 @@ function Card({ card }: { card: ExpandCard }) {
         >
           <Plus className="size-5 md:size-6" />
         </span>
-        <span className="sr-only">{open ? "Hide details" : "Show details"}</span>
+        <span className="sr-only">{open ? t("Hide details") : t("Show details")}</span>
       </button>
       <AnimatePresence initial={false}>
         {open && (

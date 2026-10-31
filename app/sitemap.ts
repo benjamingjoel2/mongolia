@@ -1,12 +1,18 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/config/site";
-import { adventures, experiences, regions } from "@/lib/content";
+import { adventures } from "@/data/adventures";
+import { regions } from "@/data/regions";
+import { experiences } from "@/data/experiences";
 import { getPosts } from "@/data/posts";
+import { locales, localizePath } from "@/lib/i18n/config";
 
+/** Every page in every language, each entry listing its hreflang alternates (x-default = English). */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url.replace(/\/$/, "");
-  const statics = [
-    "",
+  const url = (path: string, locale: (typeof locales)[number]) => `${base}${localizePath(path, locale)}`.replace(/(.)\/$/, "$1");
+  type Entry = { path: string; changeFrequency: "monthly" | "yearly"; priority: number; lastModified?: string };
+  const pages: Entry[] = [
+    "/",
     "/adventures",
     "/regions",
     "/experiences",
@@ -22,12 +28,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/journal",
     "/plan-my-adventure",
-  ].map((p) => ({ url: `${base}${p}`, changeFrequency: "monthly" as const, priority: p === "" ? 1 : 0.7 }));
-  return [
-    ...statics,
-    ...adventures.map((a) => ({ url: `${base}/adventures/${a.slug}`, changeFrequency: "monthly" as const, priority: 0.9 })),
-    ...regions.map((r) => ({ url: `${base}/regions/${r.slug}`, changeFrequency: "yearly" as const, priority: 0.6 })),
-    ...experiences.map((e) => ({ url: `${base}/experiences/${e.slug}`, changeFrequency: "yearly" as const, priority: 0.6 })),
-    ...getPosts().map((p) => ({ url: `${base}/journal/${p.slug}`, lastModified: p.date, changeFrequency: "yearly" as const, priority: 0.5 })),
-  ];
+  ].map((p) => ({ path: p, changeFrequency: "monthly", priority: p === "/" ? 1 : 0.7 }));
+  pages.push(
+    ...adventures.map(({ slug: s }): Entry => ({ path: `/adventures/${s}`, changeFrequency: "monthly", priority: 0.9 })),
+    ...regions.map(({ slug: s }): Entry => ({ path: `/regions/${s}`, changeFrequency: "yearly", priority: 0.6 })),
+    ...experiences.map(({ slug: s }): Entry => ({ path: `/experiences/${s}`, changeFrequency: "yearly", priority: 0.6 })),
+    ...getPosts().map((p): Entry => ({ path: `/journal/${p.slug}`, lastModified: p.date, changeFrequency: "yearly", priority: 0.5 })),
+  );
+  return pages.flatMap((p) =>
+    locales.map((l) => ({
+      url: url(p.path, l),
+      ...(p.lastModified ? { lastModified: p.lastModified } : {}),
+      changeFrequency: p.changeFrequency,
+      priority: p.priority,
+      alternates: {
+        languages: { ...Object.fromEntries(locales.map((x) => [x, url(p.path, x)])), "x-default": url(p.path, "en") },
+      },
+    })),
+  );
 }

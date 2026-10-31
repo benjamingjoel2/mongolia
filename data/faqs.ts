@@ -99,7 +99,7 @@ export const faqs: Faq[] = [
     question: "Should I tip my guide and driver?",
     answer: [
       "Tipping is not obligatory, but it is customary and much appreciated by guides, drivers, horsemen and camp staff, for whom tips are a meaningful part of their income.",
-      "As guidance only, many travellers give USD 10-15 per day for a guide and USD 7-10 per day for a driver [PLACEHOLDER amounts, to be confirmed], shared between the group, with smaller amounts for horse handlers and camp teams. Tip in tögrög or US dollars at the end of the trip, ideally in an envelope with a note of thanks.",
+      "As guidance only, many travellers give USD 10-15 per day for a guide and USD 7-10 per day for a driver, shared between the group, with smaller amounts for horse handlers and camp teams. Tip in tögrög or US dollars at the end of the trip, ideally in an envelope with a note of thanks.",
     ],
   },
   {

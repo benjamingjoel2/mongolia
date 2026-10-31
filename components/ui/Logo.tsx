@@ -1,13 +1,17 @@
-import Link from "next/link";
+"use client";
+
+import Link from "@/components/i18n/Link";
+import { useT } from "@/lib/i18n/client";
 import { site } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 /** Text-based logo placeholder: felt-red circle monogram + wordmark. Replace with the final mark later. */
 export function Logo({ className, showWordmark = true }: { className?: string; showWordmark?: boolean }) {
+  const t = useT();
   return (
     <Link
       href="/"
-      aria-label={`${site.name}, home`}
+      aria-label={t("{name}, home", { name: site.name })}
       className={cn("group inline-flex items-center gap-3", className)}
     >
       <span
