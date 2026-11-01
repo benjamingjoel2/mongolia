@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { preconnect } from "react-dom";
 import { site } from "@/config/site";
@@ -12,12 +12,16 @@ import { htmlLang, isLocale, locales, ogLocale } from "@/lib/i18n/config";
 import { clientDict, initLocale, t } from "@/lib/i18n/server";
 import "../globals.css";
 
-const interTight = Inter_Tight({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+// Inter Tight (SIL Open Font License), latin subset, variable weight, self-hosted
+// so the build never depends on fetching from Google Fonts.
+const interTight = localFont({
+  src: [
+    { path: "../fonts/InterTight-latin.woff2", weight: "400 500", style: "normal" },
+    { path: "../fonts/InterTight-Italic-latin.woff2", weight: "400 500", style: "italic" },
+  ],
   variable: "--font-inter-tight",
   display: "swap",
+  fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
 });
 
 export const generateStaticParams = () => locales.map((locale) => ({ locale }));
