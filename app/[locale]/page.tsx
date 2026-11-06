@@ -6,8 +6,7 @@ import { initLocale, t, tr } from "@/lib/i18n/server";
 import { pageMeta } from "@/lib/seo";
 import { difficultyLabels, seasonLabels } from "@/data/taxonomy";
 import type { AdventureSlug } from "@/data/types";
-import { Hero } from "@/components/sections/Hero";
-import { IntroReel } from "@/components/sections/IntroReel";
+import { HeroMosaic } from "@/components/sections/HeroMosaic";
 import { StoryMosaic, type MosaicItem } from "@/components/sections/StoryMosaic";
 import { JoinCarousel, type CarouselCard } from "@/components/sections/JoinCarousel";
 import { ExpandCards, type ExpandCard } from "@/components/sections/ExpandCards";
@@ -150,24 +149,19 @@ export default async function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
-      <IntroReel />
-      <Hero
-        image={images.gersSnowPeaks}
-        lines={["Steppe", "& Sky"]}
-        horizon={66}
-        scrollTo="adventures"
-        waitForIntro
-        lead={
-          <>
-            <em className="italic">{t("Nothing between you and the sky.")}</em>{" "}
-            {t("Small-group and private adventures across the steppe, the Gobi and the Altai, planned by one dedicated specialist and led by local guides.")}
-          </>
-        }
+      <HeroMosaic
+        title={t("Nothing between you and the *sky*.")}
+        lead={t("Small-group and private adventures across the steppe, the Gobi and the Altai, planned by one dedicated specialist and led by local guides.")}
+        tiles={[
+          { image: images.gersSnowPeaks, label: getRegion("central-mongolia")?.shortName ?? "", href: "/regions/central-mongolia" },
+          { image: images.camelsPlain, label: getRegion("gobi")?.shortName ?? "", href: "/regions/gobi" },
+          { image: images.lakeBoat, label: getRegion("north-khovsgol")?.shortName ?? "", href: "/regions/north-khovsgol" },
+        ]}
       >
-        <ArrowLink href={planHref} arrowClassName="text-gobi">
+        <ArrowLink href={planHref} arrowClassName="text-felt">
           {t("Plan my adventure")}
         </ArrowLink>
-      </Hero>
+      </HeroMosaic>
 
       <section id="adventures" data-theme="light" className="gutter pb-24 pt-[9.7vw] md:pb-[10vw]">
         <Reveal>

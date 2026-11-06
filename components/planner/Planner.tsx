@@ -392,7 +392,6 @@ function Confirmation({
           ? t("Your specialist will read every answer and reply within two working days with first ideas for {regions}.", { regions: regionNames.join(", ") })
           : t("Your specialist will read every answer and reply within two working days with first ideas.")}
       </p>
-      <div aria-hidden className="ornament-line mt-14 max-w-xl opacity-80" />
       <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-10">
         {[
           ["01", t("We read your plan"), t("A real person, your specialist, reviews your dates, interests and budget.")],

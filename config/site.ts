@@ -119,9 +119,3 @@ export const legalNav: NavItem[] = [
 
 export const planHref = "/plan-my-adventure";
 
-/** Intro reel shown once per session on the homepage. Set `video` to an .mp4 path to replace the image reel. */
-export const intro = {
-  enabled: true,
-  video: null as string | null,
-  durationMs: 9000,
-};

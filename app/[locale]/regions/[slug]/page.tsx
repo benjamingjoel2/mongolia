@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { notFound } from "next/navigation";
-import { getRegions, getRegion, adventuresInRegion, experiencesInRegion, slugs } from "@/lib/content";
+import { getRegion, adventuresInRegion, experiencesInRegion, slugs } from "@/lib/content";
 import { initLocale, t, getLocale } from "@/lib/i18n/server";
 import { monthShortName } from "@/lib/i18n/config";
 import { monthNames } from "@/data/taxonomy";
@@ -11,7 +11,6 @@ import { Hero } from "@/components/sections/Hero";
 import { StoryBlock } from "@/components/sections/StoryBlock";
 import { ExpandCards } from "@/components/sections/ExpandCards";
 import { JoinCarousel } from "@/components/sections/JoinCarousel";
-import { MongoliaMap } from "@/components/sections/MongoliaMap";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { DisplayHeading } from "@/components/ui/DisplayHeading";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -32,7 +31,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 export default async function RegionPage({ params }: Params) {
   await initLocale();
   const locale = getLocale();
-  const regions = getRegions();
   const r = getRegion((await params).slug);
   if (!r) notFound();
   const advs = adventuresInRegion(r.slug);
@@ -70,7 +68,9 @@ export default async function RegionPage({ params }: Params) {
                 </li>
               ))}
             </ol>
-            <h2 className="text-h2 mb-6 mt-14">{t("Best months")}</h2>
+          </div>
+          <div>
+            <h2 className="text-h2 mb-6">{t("Best months")}</h2>
             <ul className="grid grid-cols-6 gap-1.5 md:grid-cols-12" aria-label={t("Months of the year, best months highlighted")}>
               {(Object.keys(monthNames).map(Number) as MonthNumber[]).map((m) => {
                 const best = r.bestMonths.includes(m);
@@ -88,10 +88,6 @@ export default async function RegionPage({ params }: Params) {
             <h2 className="text-h2 mb-6 mt-14">{t("Getting there")}</h2>
             <p className="text-body-lg max-w-[50ch]">{r.gettingThere}</p>
           </div>
-          <MongoliaMap
-            markers={regions.map((x) => ({ id: x.slug, label: x.shortName, x: x.map.x, y: x.map.y, href: `/regions/${x.slug}`, active: x.slug === r.slug }))}
-            label={t("Map showing {name}", { name: r.name })}
-          />
         </div>
       </section>
 

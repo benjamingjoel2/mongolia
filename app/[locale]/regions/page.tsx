@@ -6,7 +6,6 @@ import { images } from "@/lib/images";
 import { regionTile } from "@/lib/cards";
 import { Hero } from "@/components/sections/Hero";
 import { StoryBlock } from "@/components/sections/StoryBlock";
-import { MongoliaMap } from "@/components/sections/MongoliaMap";
 import { StoryMosaic } from "@/components/sections/StoryMosaic";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { DisplayHeading } from "@/components/ui/DisplayHeading";
@@ -39,7 +38,7 @@ export default async function RegionsPage() {
         text={t("Mongolia is vast and *gloriously empty*: three million people, more horses than cars, and roads that become tracks within an hour of the capital.")}
       />
       <section data-theme="light" className="gutter pb-20 md:pb-[8vw]">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] lg:items-center lg:gap-16">
+        <div className="max-w-3xl">
           <div>
             <DisplayHeading text={t("Pick a *region*")} />
             <ul className="mt-10 flex flex-col gap-4">
@@ -53,7 +52,6 @@ export default async function RegionsPage() {
               ))}
             </ul>
           </div>
-          <MongoliaMap markers={regions.map((r) => ({ id: r.slug, label: r.shortName, x: r.map.x, y: r.map.y, href: `/regions/${r.slug}` }))} />
         </div>
       </section>
       <section data-theme="light" className="gutter pb-24 md:pb-[10vw]">

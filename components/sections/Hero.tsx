@@ -12,9 +12,7 @@ import { useT } from "@/lib/i18n/client";
 
 type Props = {
   image: Img;
-  /** Display variant: two giant uppercase lines (homepage). */
-  lines?: [string, string];
-  /** Page variant: a single headline with *italic* support. */
+  /** Single headline with *italic* support. */
   title?: string;
   eyebrow?: React.ReactNode;
   lead?: React.ReactNode;
@@ -22,26 +20,23 @@ type Props = {
   /** Where the foreground (ground) layer begins, as % from the top of the photo. */
   horizon?: number;
   scrollTo?: string;
-  waitForIntro?: boolean;
   size?: "full" | "page";
   priority?: boolean;
 };
 
 /**
- * Reference hero: giant type set between layered landscape planes, a lead column at
+ * Page hero: a headline set between layered landscape planes, a lead column at
  * the lower right and a red blob button that scrolls on. The photo's ground is
  * duplicated as a masked foreground plane so the type sinks behind the horizon on scroll.
  */
 export function Hero({
   image,
-  lines,
   title,
   eyebrow,
   lead,
   children,
   horizon = 64,
   scrollTo,
-  waitForIntro = false,
   size = "full",
   priority = true,
 }: Props) {
@@ -64,9 +59,9 @@ export function Hero({
     </>
   );
 
-  // CSS entrance (paints before hydration, so it never delays LCP); held while the intro reel plays.
+  // CSS entrance (paints before hydration, so it never delays LCP).
   const enter = (i: number) => ({
-    className: cn("hero-rise", waitForIntro && "hero-wait"),
+    className: "hero-rise",
     style: { "--d": `${0.1 + i * 0.12}s` } as React.CSSProperties,
   });
 
@@ -97,22 +92,11 @@ export function Hero({
             <div className="text-micro mb-5 uppercase tracking-[0.02em] text-offwhite/85 md:mb-8">{eyebrow}</div>
           </div>
         )}
-        {lines ? (
-          <h1 className="text-display">
-            <span {...enter(0)}>
-              <span className="block pl-[8vw] md:pl-[8.7vw]">{lines[0]}</span>
-            </span>
-            <span {...enter(1)}>
-              <span className="block">{lines[1]}</span>
-            </span>
+        <div {...enter(1)}>
+          <h1 className="text-h1 max-w-[16ch] text-balance md:max-w-[14ch]">
+            <Emphasis text={title ?? ""} />
           </h1>
-        ) : (
-          <div {...enter(1)}>
-            <h1 className="text-h1 max-w-[16ch] text-balance md:max-w-[14ch]">
-              <Emphasis text={title ?? ""} />
-            </h1>
-          </div>
-        )}
+        </div>
       </motion.div>
 
       {/* Foreground plane (the ground), masked so it sits in front of the type */}
