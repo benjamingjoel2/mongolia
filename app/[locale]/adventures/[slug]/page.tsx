@@ -13,7 +13,6 @@ import { adventureCard } from "@/lib/cards";
 import { Hero } from "@/components/sections/Hero";
 import { StoryBlock } from "@/components/sections/StoryBlock";
 import { Accordion } from "@/components/sections/Accordion";
-import { MongoliaMap } from "@/components/sections/MongoliaMap";
 import { JoinCarousel } from "@/components/sections/JoinCarousel";
 import { ExpandCards } from "@/components/sections/ExpandCards";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -227,7 +226,7 @@ export default async function AdventurePage({ params }: Params) {
         />
       </section>
 
-      {/* Route map */}
+      {/* Route stops */}
       <section id="route" data-theme="light" className="gutter py-20 md:py-[8vw]">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
           <div>
@@ -236,7 +235,14 @@ export default async function AdventurePage({ params }: Params) {
               {t("Distances in Mongolia are big and roads are often tracks. Expect some long days in the 4x4, broken up by stops with herders, picnics and leg-stretching walks.")}
             </p>
           </div>
-          <MongoliaMap route={a.route} label={t("Route map for {name}", { name: a.title })} />
+          <ol className="flex flex-col self-start">
+            {a.route.map((p, i) => (
+              <li key={`${p.label}-${i}`} className="flex items-baseline gap-4 border-t border-charcoal/15 py-4">
+                <span className="text-micro tabular-nums text-felt">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-[19px] leading-snug tracking-[-0.02em] md:text-[22px]">{p.label}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -359,7 +365,7 @@ export default async function AdventurePage({ params }: Params) {
 function DeparturesTable({ adventure: a, planHref, locale }: { adventure: Adventure; planHref: string; locale: Locale }) {
   const status = { open: t("Available"), limited: t("Limited spaces"), full: t("Full") } as const;
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table className="w-full min-w-[640px] border-collapse text-left">
         <caption className="sr-only">{t("Departure dates and prices for {name}", { name: a.title })}</caption>
         <thead>

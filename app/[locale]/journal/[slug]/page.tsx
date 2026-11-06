@@ -65,7 +65,6 @@ export default async function PostPage({ params }: Params) {
             ))}
           </ul>
           <Body />
-          <div aria-hidden className="ornament-line mt-16 opacity-80" />
           <div className="mt-10 flex flex-col gap-4 md:flex-row md:justify-between">
             <ArrowLink href="/journal" arrowClassName="text-felt">
               {t("More from the journal")}

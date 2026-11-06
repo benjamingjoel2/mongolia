@@ -7,7 +7,6 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { mainNav, planHref } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { Logo } from "@/components/ui/Logo";
-import { BlobTab } from "@/components/ui/Blob";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 import { useScrolled, useSurfaceTheme } from "./useSurfaceTheme";
@@ -82,18 +81,14 @@ export function Header() {
                     <AnimatePresence>
                       {showBlob && (
                         <motion.span
-                          layoutId="nav-blob"
-                          className={cn(
-                            "absolute -inset-x-1.5 top-0 h-[70px]",
-                            solid || !onDark ? "text-charcoal" : "text-offwhite",
-                          )}
-                          initial={{ opacity: 0, y: -16 }}
-                          animate={{ opacity: 1, y: 0, rotate: mainNav.indexOf(item) % 2 ? 1.2 : -1.2 }}
-                          exit={{ opacity: 0, y: -16 }}
+                          layoutId="nav-underline"
+                          aria-hidden
+                          className="absolute inset-x-3 bottom-3 h-[2px] rounded-full bg-current"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
                           transition={spring}
-                        >
-                          <BlobTab />
-                        </motion.span>
+                        />
                       )}
                     </AnimatePresence>
                     <Link
@@ -107,7 +102,6 @@ export function Header() {
                         !longLabels && "2xl:px-[1.35rem]",
                         // French, German and Spanish labels run longer: tighten the spacing so the centred nav clears the utilities.
                         longLabels && "xl:px-[0.55rem] xl:text-[12.5px] min-[1440px]:px-[0.8rem] min-[1440px]:text-[13.5px] 2xl:px-[1.05rem] 2xl:text-[15px]",
-                        showBlob && !solid && (onDark ? "text-charcoal" : "text-offwhite"),
                       )}
                     >
                       {t(item.label)}

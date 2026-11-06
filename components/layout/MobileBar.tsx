@@ -6,7 +6,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { contact, mainNav, mobileBarNav, planHref, site } from "@/config/site";
 import { cn } from "@/lib/cn";
-import { BlobTab } from "@/components/ui/Blob";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Close } from "@/components/ui/icons";
@@ -48,23 +47,21 @@ export function MobileBar() {
       >
         <LayoutGroup id="mobile-nav">
           <ul className="flex h-full items-stretch justify-between px-2">
-            {items.map((item, i) => {
+            {items.map((item) => {
               const active = activeHref === item.key;
               const content = (
                 <>
                   <AnimatePresence>
                     {active && (
                       <motion.span
-                        layoutId="mobile-blob"
+                        layoutId="mobile-underline"
                         aria-hidden
-                        className="absolute -inset-x-1 bottom-0 h-[calc(100%+12px)] text-charcoal"
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0, rotate: i % 2 ? -1.5 : 1.5 }}
-                        exit={{ opacity: 0, y: 14 }}
+                        className="absolute inset-x-4 bottom-2.5 h-[2px] rounded-full bg-current"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={spring}
-                      >
-                        <BlobTab flip />
-                      </motion.span>
+                      />
                     )}
                   </AnimatePresence>
                   <span className="relative">{t(item.label)}</span>
