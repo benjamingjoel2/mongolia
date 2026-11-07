@@ -93,6 +93,29 @@ body {
 
 /* ---------- Type scale (reference: 390px → 1440px) ---------- */
 
+@utility text-display {
+  /* Hero wordmark: 86px (22vw) on phones → 185px (12.85vw) at 1440 */
+  font-size: min(22vw, 9rem);
+  line-height: 0.85;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .text-display {
+    font-size: min(12.85vw, 15rem);
+  }
+}
+
+@utility text-hero {
+  /* Page-hero headline keeps its original size: 36px → 100px */
+  font-size: clamp(2.25rem, 6.95vw, 7.5rem);
+  line-height: 0.99;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
 @utility text-h1 {
   /* Section headline: 36px → 88px (capped well below hero-word size) */
   font-size: clamp(2.25rem, 6.1vw, 5.5rem);
@@ -187,6 +210,11 @@ body {
   }
 }
 
+/* Intro reel is skipped (CSS, before hydration) once seen this session or with reduced motion. */
+html[data-intro="done"] [data-intro-overlay] {
+  display: none;
+}
+
 @keyframes nudge {
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(4px); }
@@ -200,4 +228,7 @@ body {
 .hero-rise {
   display: block;
   animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+html:not([data-intro="done"]) .hero-wait {
+  animation-play-state: paused;
 }
