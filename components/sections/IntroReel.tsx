@@ -51,7 +51,10 @@ export function IntroReel() {
     finish();
   }, []);
 
+  // Lock page scroll only while the reel is on screen. Depending on `show` means the
+  // cleanup (which restores scrolling) runs as soon as the reel ends or is skipped.
   useEffect(() => {
+    if (!show) return;
     if (!intro.enabled || document.documentElement.dataset.intro === "done") {
       finish();
       return;
@@ -64,15 +67,21 @@ export function IntroReel() {
     const onKey = (e: KeyboardEvent) => {
       if (["Escape", "Enter", " ", "ArrowDown"].includes(e.key)) close();
     };
+    // Trying to scroll (wheel or swipe) skips the reel, like a click.
+    const onScrollIntent = () => close();
     window.addEventListener("keydown", onKey);
+    window.addEventListener("wheel", onScrollIntent, { passive: true });
+    window.addEventListener("touchmove", onScrollIntent, { passive: true });
     ref.current?.focus();
     return () => {
       document.body.style.overflow = prev;
       window.clearInterval(tick);
       window.clearTimeout(end);
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("wheel", onScrollIntent);
+      window.removeEventListener("touchmove", onScrollIntent);
     };
-  }, [close]);
+  }, [close, show]);
 
   if (!intro.enabled) return null;
 
