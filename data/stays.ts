@@ -8,7 +8,7 @@ import { images } from "@/lib/images";
 export const stays: Stay[] = [
   {
     slug: "terelj-river-camp",
-    name: "Terelj river camp (placeholder name)",
+    name: "Terelj river camp",
     placeholder: true,
     region: "ulaanbaatar-terelj",
     comfort: "comfortable",
@@ -25,7 +25,7 @@ export const stays: Stay[] = [
   },
   {
     slug: "orkhon-valley-camp",
-    name: "Orkhon valley camp (placeholder name)",
+    name: "Orkhon valley camp",
     placeholder: true,
     region: "central-mongolia",
     comfort: "comfortable",
@@ -42,7 +42,7 @@ export const stays: Stay[] = [
   },
   {
     slug: "gobi-dunes-camp",
-    name: "Gobi dunes camp (placeholder name)",
+    name: "Gobi dunes camp",
     placeholder: true,
     region: "gobi",
     comfort: "luxury",
@@ -60,7 +60,7 @@ export const stays: Stay[] = [
   },
   {
     slug: "khovsgol-lakeshore-camp",
-    name: "Khövsgöl lakeshore camp (placeholder name)",
+    name: "Khövsgöl lakeshore camp",
     placeholder: true,
     region: "north-khovsgol",
     comfort: "comfortable",
@@ -77,7 +77,7 @@ export const stays: Stay[] = [
   },
   {
     slug: "altai-family-gers",
-    name: "Altai family gers (placeholder name)",
+    name: "Altai family gers",
     placeholder: true,
     region: "far-west-altai",
     comfort: "traditional",
@@ -94,7 +94,7 @@ export const stays: Stay[] = [
   },
   {
     slug: "khentii-steppe-camp",
-    name: "Khentii steppe camp (placeholder name)",
+    name: "Khentii steppe camp",
     placeholder: true,
     region: "east-khentii",
     comfort: "traditional",

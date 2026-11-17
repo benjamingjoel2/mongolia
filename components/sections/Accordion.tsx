@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { Plus } from "@/components/ui/icons";
+import { useT } from "@/lib/i18n/client";
 
 export interface AccordionItem {
   id: string;
@@ -18,6 +19,7 @@ export interface AccordionItem {
 
 /** Rows that expand in place like the reference's prize cards, used for itineraries and FAQs. */
 export function Accordion({ items, allowExpandAll = false, defaultOpen = [] }: { items: AccordionItem[]; allowExpandAll?: boolean; defaultOpen?: string[] }) {
+  const t = useT();
   const [open, setOpen] = useState<Set<string>>(() => new Set(defaultOpen));
   const all = open.size === items.length;
   const toggle = (id: string) =>
@@ -37,7 +39,7 @@ export function Accordion({ items, allowExpandAll = false, defaultOpen = [] }: {
             onClick={() => setOpen(all ? new Set() : new Set(items.map((i) => i.id)))}
             className="text-[15px] underline underline-offset-4 hover:text-felt"
           >
-            {all ? "Collapse all" : "Expand all"}
+            {all ? t("Collapse all") : t("Expand all")}
           </button>
         </div>
       )}

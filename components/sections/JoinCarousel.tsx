@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Img } from "@/lib/images";
 import { cn } from "@/lib/cn";
@@ -8,6 +8,7 @@ import { Photo } from "@/components/ui/Photo";
 import { Emphasis } from "@/components/ui/DisplayHeading";
 import { BlobIconButton } from "@/components/ui/BlobButton";
 import { ArrowLeft, ArrowRight } from "@/components/ui/icons";
+import { useT } from "@/lib/i18n/client";
 
 export interface CarouselCard {
   id: string;
@@ -26,6 +27,7 @@ export interface CarouselCard {
  * top-aligned and a shorter dropped size, scrolled by a red arrow pinned to the right edge.
  */
 export function JoinCarousel({ cards, label }: { cards: CarouselCard[]; label: string }) {
+  const t = useT();
   const track = useRef<HTMLUListElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
@@ -82,7 +84,7 @@ export function JoinCarousel({ cards, label }: { cards: CarouselCard[]; label: s
 
       <div className="pointer-events-none absolute inset-y-0 right-[15px] flex items-center md:right-7">
         <BlobIconButton
-          label="Next cards"
+          label={t("Next cards")}
           onClick={() => step(1)}
           disabled={!canNext}
           className={cn("pointer-events-auto transition-opacity", !canNext && "opacity-0")}
@@ -92,7 +94,7 @@ export function JoinCarousel({ cards, label }: { cards: CarouselCard[]; label: s
       </div>
       <div className="pointer-events-none absolute inset-y-0 left-[15px] flex items-center md:left-7">
         <BlobIconButton
-          label="Previous cards"
+          label={t("Previous cards")}
           variant="charcoal"
           onClick={() => step(-1)}
           disabled={!canPrev}

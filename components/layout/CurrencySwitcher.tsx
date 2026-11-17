@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { currencies, currencyOrder } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { setCurrency, useCurrency } from "./CurrencyStore";
+import { useT } from "@/lib/i18n/client";
 
 /**
  * Currency switcher in the place of the reference's language switcher:
@@ -12,6 +13,7 @@ import { setCurrency, useCurrency } from "./CurrencyStore";
  */
 export function CurrencySwitcher({ className }: { className?: string }) {
   const code = useCurrency();
+  const t = useT();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const panelId = useId();
@@ -39,7 +41,7 @@ export function CurrencySwitcher({ className }: { className?: string }) {
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        aria-label={`Currency: ${currencies[code].label}. Change currency`}
+        aria-label={t("Currency: {name}. Change currency", { name: t(currencies[code].label) })}
         onClick={() => setOpen((o) => !o)}
         className="text-nav inline-flex h-9 items-center gap-1.5 rounded-full px-2 transition-opacity hover:opacity-70"
       >
@@ -57,7 +59,7 @@ export function CurrencySwitcher({ className }: { className?: string }) {
           <motion.ul
             id={panelId}
             role="listbox"
-            aria-label="Choose currency"
+            aria-label={t("Choose currency")}
             className="fixed right-0 top-[var(--panel-top,64px)] z-[70] flex w-full sm:w-auto"
             initial="closed"
             animate="open"
@@ -95,7 +97,7 @@ export function CurrencySwitcher({ className }: { className?: string }) {
                     <span className="text-[18px] font-medium leading-none tracking-[-0.04em] md:text-[22px]">{c}</span>
                     <span className="text-[12px] leading-tight opacity-75">
                       {currencies[c].symbol}
-                      <span className="hidden sm:inline"> {currencies[c].label}</span>
+                      <span className="hidden sm:inline"> {t(currencies[c].label)}</span>
                     </span>
                   </button>
                 </motion.li>

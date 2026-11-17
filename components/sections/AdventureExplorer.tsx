@@ -21,13 +21,15 @@ import { cn } from "@/lib/cn";
 import { Check } from "@/components/ui/icons";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { StoryMosaic, type MosaicItem } from "./StoryMosaic";
+import { msg } from "@/lib/i18n/core";
+import { useT } from "@/lib/i18n/client";
 
 const sorts: { value: SortKey; label: string }[] = [
-  { value: "recommended", label: "Recommended" },
-  { value: "price-asc", label: "Price, low to high" },
-  { value: "price-desc", label: "Price, high to low" },
-  { value: "days-asc", label: "Shortest first" },
-  { value: "days-desc", label: "Longest first" },
+  { value: "recommended", label: msg("Recommended") },
+  { value: "price-asc", label: msg("Price, low to high") },
+  { value: "price-desc", label: msg("Price, high to low") },
+  { value: "days-asc", label: msg("Shortest first") },
+  { value: "days-desc", label: msg("Longest first") },
 ];
 
 /**
@@ -36,7 +38,16 @@ const sorts: { value: SortKey; label: string }[] = [
  * State syncs to the URL (?region=gobi&season=summer) so filtered views are shareable.
  */
 export function AdventureExplorer({ adventures, regions }: { adventures: Adventure[]; regions: Region[] }) {
-  const groups = useMemo(() => buildFilterGroups(regions, adventures), [regions, adventures]);
+  const t = useT();
+  const groups = useMemo(
+    () =>
+      buildFilterGroups(regions, adventures).map((g) => ({
+        ...g,
+        label: t(g.label),
+        options: g.options.map((o) => ({ ...o, label: t(o.label) })),
+      })),
+    [regions, adventures, t],
+  );
   const [filters, setFilters] = useState<FilterState>(emptyFilters);
   const [sort, setSort] = useState<SortKey>("recommended");
   const [openKey, setOpenKey] = useState<FilterKey | null>(null);
@@ -80,8 +91,8 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
     shortTitle: a.shortTitle,
     image: a.hero,
     href: `/adventures/${a.slug}`,
-    tags: [a.regions.map((r) => regionName.get(r)).join(" · "), `${a.days} days`],
-    meta: `${a.days} days · ${difficultyLabels[a.difficulty].label}`,
+    tags: [a.regions.map((r) => regionName.get(r)).join(" · "), t("{n} days", { n: a.days })],
+    meta: `${t("{n} days", { n: a.days })} · ${t(difficultyLabels[a.difficulty].label)}`,
     priceFromUSD: a.priceFromUSD,
   }));
 
@@ -92,7 +103,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
       {/* Filter bar */}
       <div className="sticky top-14 z-30 -mx-[var(--gutter)] border-y border-charcoal/10 bg-offwhite/95 backdrop-blur-md">
         <div className="gutter flex items-center gap-1 overflow-x-auto no-scrollbar">
-          <span className="text-nav mr-2 hidden shrink-0 text-charcoal/70 md:inline">Filter</span>
+          <span className="text-nav mr-2 hidden shrink-0 text-charcoal/70 md:inline">{t("Filter")}</span>
           {groups.map((g) => {
             const n = filters[g.key].length;
             const isOpen = openKey === g.key;
@@ -125,7 +136,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
           })}
           <div className="ml-auto flex shrink-0 items-center gap-4 pl-4">
             <label className="flex items-center gap-2 text-[14px]">
-              <span className="sr-only md:not-sr-only">Sort</span>
+              <span className="sr-only md:not-sr-only">{t("Sort")}</span>
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortKey)}
@@ -133,7 +144,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
               >
                 {sorts.map((s) => (
                   <option key={s.value} value={s.value}>
-                    {s.label}
+                    {t(s.label)}
                   </option>
                 ))}
               </select>
@@ -184,7 +195,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
       {/* Result summary */}
       <div className="flex flex-wrap items-baseline justify-between gap-4 py-8 md:py-12">
         <h2 className="text-h2" aria-live="polite">
-          {results.length} {results.length === 1 ? "adventure" : "adventures"}
+          {results.length === 1 ? t("{n} adventure", { n: 1 }) : t("{n} adventures", { n: results.length })}
         </h2>
         {active > 0 && (
           <div className="flex flex-wrap items-center gap-2">
@@ -195,7 +206,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
                   type="button"
                   onClick={() => toggle(g.key, v)}
                   className="inline-flex h-8 items-center gap-2 rounded-full bg-sand px-3 text-[13px] hover:bg-gobi-tint"
-                  aria-label={`Remove filter ${g.options.find((o) => o.value === v)?.label}`}
+                  aria-label={t("Remove filter {name}", { name: g.options.find((o) => o.value === v)?.label })}
                 >
                   {g.options.find((o) => o.value === v)?.label}
                   <span aria-hidden>×</span>
@@ -207,7 +218,7 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
               onClick={() => setFilters(emptyFilters())}
               className="ml-2 text-[14px] underline underline-offset-4 hover:text-felt"
             >
-              Clear all
+              {t("Clear all")}
             </button>
           </div>
         )}
@@ -217,16 +228,16 @@ export function AdventureExplorer({ adventures, regions }: { adventures: Adventu
         <StoryMosaic key={results.map((r) => r.slug).join("|")} items={items} numbered syncUrl={false} />
       ) : (
         <div className="py-20 text-center">
-          <p className="text-h2 mx-auto max-w-[20ch]">Nothing fits that exact mix, yet.</p>
+          <p className="text-h2 mx-auto max-w-[20ch]">{t("Nothing fits that exact mix, yet.")}</p>
           <p className="text-body-lg mx-auto mt-6 max-w-[40ch] text-charcoal/75">
-            Every trip can be tailored. Loosen a filter, or tell us what you have in mind and your specialist will build it.
+            {t("Every trip can be tailored. Loosen a filter, or tell us what you have in mind and your specialist will build it.")}
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-10">
             <button type="button" onClick={() => setFilters(emptyFilters())} className="text-link group inline-flex items-baseline gap-2">
-              <span className="text-felt">→</span> Clear filters
+              <span className="text-felt">→</span> {t("Clear filters")}
             </button>
             <ArrowLink href={planHref} arrowClassName="text-felt">
-              Plan a tailor-made adventure
+              {t("Plan a tailor-made adventure")}
             </ArrowLink>
           </div>
         </div>

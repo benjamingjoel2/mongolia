@@ -1,16 +1,18 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { contact, mainNav, mobileBarNav, planHref, site, whatsappHref } from "@/config/site";
+import { contact, mainNav, mobileBarNav, planHref, site } from "@/config/site";
 import { cn } from "@/lib/cn";
-import { BlobTab } from "@/components/ui/Blob";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Close } from "@/components/ui/icons";
 import { isActive } from "./Header";
+import { LanguageSelector } from "@/components/i18n/LanguageSelector";
+import { useT } from "@/lib/i18n/client";
+import { splitPath } from "@/lib/i18n/config";
 
 const spring = { type: "spring", stiffness: 380, damping: 34 } as const;
 
@@ -19,18 +21,20 @@ const spring = { type: "spring", stiffness: 380, damping: 34 } as const;
  * a charcoal bar with a blob tab rising from the bottom edge behind the active item.
  */
 export function MobileBar() {
-  const pathname = usePathname();
+  const rawPath = usePathname() ?? "/";
+  const pathname = splitPath(rawPath).path;
+  const t = useT();
   const [menuOpen, setMenuOpen] = useState(false);
   const activeHref = menuOpen ? "menu" : (mobileBarNav.find((n) => isActive(pathname, n.href))?.href ?? null);
 
   // Close the sheet on route change.
-  const [lastPath, setLastPath] = useState(pathname);
-  if (lastPath !== pathname) {
-    setLastPath(pathname);
+  const [lastPath, setLastPath] = useState(rawPath);
+  if (lastPath !== rawPath) {
+    setLastPath(rawPath);
     setMenuOpen(false);
   }
 
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const closeMenu = useCallback(() => setMenuOpen(false), [setMenuOpen]);
 
   const items = [...mobileBarNav.map((n) => ({ ...n, key: n.href })), { label: "Menu", href: "menu", key: "menu" }];
 
@@ -38,31 +42,29 @@ export function MobileBar() {
     <>
       <nav
         data-chrome
-        aria-label="Quick"
+        aria-label={t("Quick")}
         className="fixed inset-x-0 bottom-0 z-50 h-[var(--bar-h)] bg-charcoal text-offwhite pb-[env(safe-area-inset-bottom)] xl:hidden"
       >
         <LayoutGroup id="mobile-nav">
           <ul className="flex h-full items-stretch justify-between px-2">
-            {items.map((item, i) => {
+            {items.map((item) => {
               const active = activeHref === item.key;
               const content = (
                 <>
                   <AnimatePresence>
                     {active && (
                       <motion.span
-                        layoutId="mobile-blob"
+                        layoutId="mobile-underline"
                         aria-hidden
-                        className="absolute -inset-x-1 bottom-0 h-[calc(100%+12px)] text-charcoal"
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0, rotate: i % 2 ? -1.5 : 1.5 }}
-                        exit={{ opacity: 0, y: 14 }}
+                        className="absolute inset-x-4 bottom-2.5 h-[2px] rounded-full bg-current"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={spring}
-                      >
-                        <BlobTab flip />
-                      </motion.span>
+                      />
                     )}
                   </AnimatePresence>
-                  <span className="relative">{item.label}</span>
+                  <span className="relative">{t(item.label)}</span>
                 </>
               );
               const cls = "text-nav relative flex h-full items-center px-4";
@@ -95,7 +97,8 @@ export function MobileBar() {
 }
 
 function MenuSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const pathname = usePathname();
+  const pathname = splitPath(usePathname() ?? "/").path;
+  const t = useT();
   const firstLink = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
@@ -120,7 +123,7 @@ function MenuSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
           data-theme="dark"
           role="dialog"
           aria-modal="true"
-          aria-label="Menu"
+          aria-label={t("Menu")}
           className="fixed inset-x-0 top-0 bottom-[var(--bar-h)] z-[45] overflow-y-auto bg-charcoal text-offwhite xl:hidden"
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0% 0 0 0)" }}
@@ -131,7 +134,7 @@ function MenuSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close menu"
+              aria-label={t("Close menu")}
               className="absolute right-[15px] top-[calc(var(--header-h)+8px)] grid size-10 place-items-center"
             >
               <Close className="size-6" />
@@ -158,25 +161,23 @@ function MenuSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
                     )}
                   >
                     <span className="text-micro tabular-nums opacity-60">{String(i + 1).padStart(2, "0")}</span>
-                    {item.label}
+                    {t(item.label)}
                   </Link>
                 </motion.li>
               ))}
             </motion.ul>
 
             <div className="mt-auto flex flex-col gap-5 pt-10">
+              <LanguageSelector className="text-nav" linkClassName="px-1.5 py-1" />
               <BlobButton href={planHref} size="lg" className="self-start">
-                Plan my adventure
+                {t("Plan my adventure")}
               </BlobButton>
               <div className="flex flex-col gap-3">
-                <ArrowLink href={whatsappHref} external arrowClassName="text-gobi">
-                  WhatsApp us
-                </ArrowLink>
                 <ArrowLink href={`mailto:${contact.email}`} external arrowClassName="text-gobi">
                   {contact.email}
                 </ArrowLink>
               </div>
-              <p className="text-micro opacity-60">{site.tagline}</p>
+              <p className="text-micro opacity-60">{t(site.tagline)}</p>
             </div>
           </div>
         </motion.div>

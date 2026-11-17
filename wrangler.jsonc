@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Cloudflare Workers config for the OpenNext build (`npm run cf-build`).
+  // Vercel ignores this file.
+  "name": "mongolia",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-20",
+  // enable_nodejs_global_timers: Node-style setTimeout, which Next.js Cache Components
+  // (cacheComponents in next.config.ts) relies on to schedule prerendering.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public", "enable_nodejs_global_timers"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // Self-reference used by OpenNext for caching; must match "name".
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "mongolia"
+    }
+  ],
+  // No Images binding: next/image uses the custom Unsplash loader (lib/imageLoader.ts).
+  "observability": {
+    "enabled": true
+  }
+  // NEXT_PUBLIC_* values are inlined at build time: set them in the build environment.
+}

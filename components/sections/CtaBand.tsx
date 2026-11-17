@@ -1,14 +1,15 @@
 import { DisplayHeading } from "@/components/ui/DisplayHeading";
 import { BlobButton } from "@/components/ui/BlobButton";
 import { ArrowLink } from "@/components/ui/ArrowLink";
-import { whatsappHref } from "@/config/site";
+import { contact, planHref } from "@/config/site";
+import { t } from "@/lib/i18n/server";
 
 /** Closing call to action: big italic headline and the red blob button. */
 export function CtaBand({
-  title = "*Ready* when you are",
-  text = "Tell us your dates and dreams. One specialist plans everything and replies within two working days.",
-  href = "/plan-my-adventure",
-  button = "Plan my adventure",
+  title = t("*Ready* when you are"),
+  text = t("Tell us your dates and dreams. One specialist plans everything and replies within two working days."),
+  href = planHref,
+  button = t("Plan my adventure"),
 }: {
   title?: string;
   text?: string;
@@ -26,8 +27,8 @@ export function CtaBand({
           <BlobButton href={href} size="lg">
             {button}
           </BlobButton>
-          <ArrowLink href={whatsappHref} external arrowClassName="text-gobi">
-            Or message us on WhatsApp
+          <ArrowLink href={`mailto:${contact.email}`} external arrowClassName="text-gobi">
+            {t("Or email us")}
           </ArrowLink>
         </div>
       </div>
